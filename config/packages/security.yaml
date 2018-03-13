@@ -1,0 +1,26 @@
+security:
+    encoders:
+        App\Entity\UserAccount:
+         algorithm: bcrypt
+
+    providers:
+        main:
+            entity:
+                class: App\Entity\UserAccount
+                property: emailAddress
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: true
+            form_login:
+                login_path: userManagement.login
+                check_path: userManagement.login
+            logout:
+                path: userManagement.logout
+
+    access_control:
+        - { path: ^/admin, roles: IS_AUTHENTICATED_FULLY }

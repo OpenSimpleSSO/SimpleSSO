@@ -1,0 +1,27 @@
+
+attribute:
+    userAccount:
+        organization: "Entreprise"
+        firstName: "Prénom"
+        lastName: "Nom"
+        emailAddress: "Adresse e-mail"
+        password: "Mot de passe"
+
+
+
+userManagement:
+    registration:
+        title: "Inscription"
+        firstName: "Votre prénom"
+        lastName: "Votre nom"
+        emailAddress: "Votre adresse e-mail"
+        siren: "Votre entreprise"
+        password: "Choisissez votre mot de passe"
+        passwordRepeat: "Répétez votre mot de passe"
+        submit: "Créer mon compte"
+        emailAddressAlreadyUsed: "Un compte utilisateur existe déjà pour cette adresse e-mail. Si vous avez oublié votre mot de passe, vous pouvez utiliser la fonctionnalité \"mot de passe oublié\" depuis la page de connexion."
+
+    login:
+        title: "Connexion"
+        login: "Se connecter"
+        register: "Pas encore de compte ? Inscrivez-vous"

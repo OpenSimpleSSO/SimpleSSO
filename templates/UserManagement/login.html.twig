@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    {% if error %}
+        <div class="alert alert-danger">
+            <p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+        </div>
+    {% endif %}
+
+    <form action="{{ path('userManagement.login') }}" method="post">
+        <div class="form-group">
+            <label for="username">{{ 'emailAddress'|tra('userAccount') }}</label>
+            <input type="text" id="username" name="_username" class="form-control" value="{{ lastEmailAddress }}" />
+        </div>
+        <div class="form-group">
+            <label for="password">{{ 'password'|tra('userAccount') }}</label>
+            <input type="password" id="password" name="_password" class="form-control" />
+        </div>
+        <div class="form-group">
+            <button class="btn btn-secondary">{{ 'login'|tr }}</button>
+            <a href="{{ path('userManagement.registration') }}">{{ 'register'|tr }}</a>
+        </div>
+    </form>
+{% endblock %}
