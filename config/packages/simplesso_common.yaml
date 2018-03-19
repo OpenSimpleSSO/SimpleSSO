@@ -1,0 +1,12 @@
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    SimpleSSO\CommonBundle\Model\OpenSslModel:
+        $privateKeyFilePath: '%env(SECURITY_PRIVATE_KEY_FILE_PATH)%'
+        $publicKeyFilePath: '%env(SECURITY_PUBLIC_KEY_FILE_PATH)%'
+
+    SimpleSSO\CommonBundle\Model\TokenModel: ~

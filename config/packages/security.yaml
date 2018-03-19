@@ -1,7 +1,7 @@
 security:
     encoders:
         App\Entity\UserAccount:
-         algorithm: bcrypt
+            algorithm: bcrypt
 
     providers:
         main:

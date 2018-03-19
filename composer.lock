@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c2d2597c4be7a6ada029a4e472e2d8b",
+    "content-hash": "d5285fdc535834f7e09d6254bfb57b0d",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1479,6 +1479,46 @@
                 "controllers"
             ],
             "time": "2018-02-14T08:40:54+00:00"
+        },
+        {
+            "name": "simplesso/common-bundle",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/OpenSimpleSSO/CommonBundle.git",
+                "reference": "f0b0325a2a05614e7d4a6f1a705467a0379773ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/OpenSimpleSSO/CommonBundle/zipball/f0b0325a2a05614e7d4a6f1a705467a0379773ec",
+                "reference": "f0b0325a2a05614e7d4a6f1a705467a0379773ec",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "ramsey/uuid": "^3.7",
+                "symfony/dependency-injection": "^4.0",
+                "symfony/http-kernel": "^4.0",
+                "symfony/security": "^4.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "SimpleSSO\\CommonBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vinorcola",
+                    "email": "vinorcola@gmail.com"
+                }
+            ],
+            "description": "Bundle providing common tools for SimpleSSO server and for Symfony clients.",
+            "time": "2018-03-19T09:01:57+00:00"
         },
         {
             "name": "symfony/cache",
