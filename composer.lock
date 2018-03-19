@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d5285fdc535834f7e09d6254bfb57b0d",
+    "content-hash": "675406c77ffcd67f6983d32e50776bad",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -3678,6 +3678,33 @@
                 "templating"
             ],
             "time": "2018-03-03T16:23:01+00:00"
+        },
+        {
+            "name": "vinorcola/api-server-tools",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Vinorcola/ApiServerTools.git",
+                "reference": "2fd68f392894f3dd4cd5701a119f0b7f565361a5"
+            },
+            "require": {
+                "php": "^7.1",
+                "symfony/http-kernel": "^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Vinorcola\\ApiServerTools\\": "src"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Vinorcola",
+                    "email": "vinorcola@gmail.com"
+                }
+            ],
+            "description": "Api server tools.",
+            "time": "2018-03-19T11:30:05+00:00"
         },
         {
             "name": "vinorcola/helper-bundle",

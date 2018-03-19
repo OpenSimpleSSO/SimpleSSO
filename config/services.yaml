@@ -12,3 +12,5 @@ services:
     App\:
         resource: '../src/*'
         exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
+
+    Vinorcola\ApiServerTools\ExceptionSubscriber: ~

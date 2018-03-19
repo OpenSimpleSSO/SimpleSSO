@@ -24,7 +24,7 @@ class UserAccount implements UserInterface
     private $id;
 
     /**
-     * @var int
+     * @var string
      *
      * @Mapping\Column(type="string", length=80)
      */

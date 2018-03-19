@@ -22,4 +22,17 @@ class UserAccountRepository extends Repository
     {
         $this->entityManager->persist($userAccount);
     }
+
+    /**
+     * @param string $userAccountId
+     * @return UserAccount|null
+     */
+    public function find(string $userAccountId): ?UserAccount
+    {
+        return $this
+            ->createQueryBuilder('ua')
+            ->where('ua.id = :userAccountId')
+            ->setParameter('userAccountId', $userAccountId)
+            ->getQuery()->getOneOrNullResult();
+    }
 }

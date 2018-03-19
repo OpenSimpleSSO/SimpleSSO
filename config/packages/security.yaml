@@ -4,18 +4,32 @@ security:
             algorithm: bcrypt
 
     providers:
-        main:
+        user:
             entity:
                 class: App\Entity\UserAccount
                 property: emailAddress
+        client:
+            entity:
+                class: App\Entity\Client
+                property: id
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        api:
+            pattern: ^/api/
+            anonymous: false
+            provider: client
+            guard:
+                authenticators:
+                    - App\Security\ClientAuthenticator
+            stateless: true
+
         main:
             anonymous: true
+            provider: user
             form_login:
                 login_path: userManagement.login
                 check_path: userManagement.login

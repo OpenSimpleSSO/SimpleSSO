@@ -302,6 +302,9 @@
     "twig/twig": {
         "version": "v2.4.6"
     },
+    "vinorcola/api-server-tools": {
+        "version": "v1.0.0"
+    },
     "vinorcola/helper-bundle": {
         "version": "v1.0.3"
     },
