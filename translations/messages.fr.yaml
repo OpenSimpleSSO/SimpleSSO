@@ -15,7 +15,7 @@ userManagement:
         firstName: "Votre prénom"
         lastName: "Votre nom"
         emailAddress: "Votre adresse e-mail"
-        siren: "Votre entreprise"
+        organization: "Votre entreprise"
         password: "Choisissez votre mot de passe"
         passwordRepeat: "Répétez votre mot de passe"
         submit: "Créer mon compte"

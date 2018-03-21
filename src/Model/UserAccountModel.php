@@ -49,7 +49,7 @@ class UserAccountModel
      */
     public function create(Registration $data): UserAccount
     {
-        $userAccount = new UserAccount($data->siren);
+        $userAccount = new UserAccount($data->organization);
         $userAccount->setEmailAddress($data->emailAddress);
         $userAccount->emailAddressVerified = false;
         $userAccount->firstName = $data->firstName;

@@ -5,7 +5,6 @@ namespace App\Form\UserManagement;
 use App\Model\Data\UserManagement\Registration;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,7 +18,7 @@ class RegistrationType extends AbstractType
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
             ->add('emailAddress', EmailType::class)
-            ->add('siren', IntegerType::class)
+            ->add('organization', TextType::class)
             ->add('password', PasswordType::class)
             ->add('passwordRepeat', PasswordType::class);
     }
