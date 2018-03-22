@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\Entity\UserAccount;
+use App\Model\Data\Api\User\PasswordChange;
 use App\Model\Data\Api\User\ProfileEdition;
 use App\Model\Data\Generic\BaseRegistration;
 use App\Repository\UserAccountRepository;
@@ -73,6 +74,15 @@ class UserAccountModel
         $userAccount->firstName = $data->firstName;
         $userAccount->lastName = $data->lastName;
         $userAccount->roles = $data->roles;
+    }
+
+    /**
+     * @param UserAccount    $userAccount
+     * @param PasswordChange $data
+     */
+    public function changePassword(UserAccount $userAccount, PasswordChange $data): void
+    {
+        $userAccount->password = $this->passwordEncoder->encodePassword($userAccount, $data->password);
     }
 
     /**

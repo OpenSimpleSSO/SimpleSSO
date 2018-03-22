@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\UserAccount;
+use App\Model\Data\Api\User\PasswordChange;
 use App\Model\Data\Api\User\ProfileEdition;
 use App\Model\Data\Api\User\Registration;
 use App\Model\JsonRequestModel;
@@ -132,6 +133,45 @@ class UserController extends Controller
                     $data->emailAddress
                 ));
             }
+        }
+
+        throw new InvalidInputException('Invalid request.', $errors);
+    }
+
+    /**
+     * @Route("/{userAccountId}/password", name="changePassword", requirements={
+     *     "userAccountId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+     * })
+     * @Method("PUT")
+     * @Security("is_granted('ROLE_CLIENT')")
+     *
+     * @param Request               $request
+     * @param string                $userAccountId
+     * @param UserAccountRepository $repository
+     * @param JsonRequestModel      $jsonRequestModel
+     * @param UserAccountModel      $model
+     * @return Response
+     */
+    public function changePassword(
+        Request $request,
+        string $userAccountId,
+        UserAccountRepository $repository,
+        JsonRequestModel $jsonRequestModel,
+        UserAccountModel $model
+    ): Response {
+
+        $userAccount = $repository->find($userAccountId);
+        if (!$userAccount) {
+            throw new NotFoundHttpException('User account not found.');
+        }
+
+        $data = $jsonRequestModel->handleRequest($request, PasswordChange::class);
+        /** @var ConstraintViolationListInterface $errors */
+        if ($jsonRequestModel->isValid($data, $errors)) {
+            $model->changePassword($userAccount, $data);
+            $this->saveDatabase();
+
+            return new Response();
         }
 
         throw new InvalidInputException('Invalid request.', $errors);

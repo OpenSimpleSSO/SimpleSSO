@@ -32,7 +32,7 @@ class JsonRequestModel
     public function handleRequest(Request $request, string $dataClass)
     {
         $content = json_decode($request->getContent(), true);
-        if ($content === false) {
+        if (!$content) {
             throw new BadRequestHttpException('Invalid or missing JSON content.');
         }
 
