@@ -112,14 +112,25 @@ class UserAccount implements UserInterface
     }
 
     /**
+     * @param string $organization
+     */
+    public function setOrganization(string $organization): void
+    {
+        $this->organization = $organization;
+    }
+
+    /**
      * Setup the email address.
      *
      * @param string $emailAddress
      */
     public function setEmailAddress(string $emailAddress): void
     {
-        $this->emailAddress = $emailAddress;
-        $this->uniqueEmailAddress = mb_strtolower($emailAddress);
+        if ($emailAddress !== $this->emailAddress) {
+            $this->emailAddress = $emailAddress;
+            $this->uniqueEmailAddress = mb_strtolower($emailAddress);
+            $this->emailAddressVerified = false;
+        }
     }
 
     /**

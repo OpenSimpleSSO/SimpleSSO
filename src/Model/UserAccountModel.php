@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\Entity\UserAccount;
+use App\Model\Data\Api\User\ProfileEdition;
 use App\Model\Data\Generic\BaseRegistration;
 use App\Repository\UserAccountRepository;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -51,7 +52,6 @@ class UserAccountModel
     {
         $userAccount = new UserAccount($data->organization);
         $userAccount->setEmailAddress($data->emailAddress);
-        $userAccount->emailAddressVerified = false;
         $userAccount->firstName = $data->firstName;
         $userAccount->lastName = $data->lastName;
         $userAccount->roles = [ 'ROLE_USER' ];
@@ -60,6 +60,19 @@ class UserAccountModel
         $this->repository->save($userAccount);
 
         return $userAccount;
+    }
+
+    /**
+     * @param UserAccount    $userAccount
+     * @param ProfileEdition $data
+     */
+    public function editProfile(UserAccount $userAccount, ProfileEdition $data): void
+    {
+        $userAccount->setOrganization($data->organization);
+        $userAccount->setEmailAddress($data->emailAddress);
+        $userAccount->firstName = $data->firstName;
+        $userAccount->lastName = $data->lastName;
+        $userAccount->roles = $data->roles;
     }
 
     /**
