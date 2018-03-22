@@ -94,4 +94,20 @@ class UserAccountModel
             new UsernamePasswordToken($userAccount, null, 'main', $userAccount->getRoles())
         );
     }
+
+    /**
+     * @param UserAccount $userAccount
+     */
+    public function enable(UserAccount $userAccount): void
+    {
+        $userAccount->enabled = true;
+    }
+
+    /**
+     * @param UserAccount $userAccount
+     */
+    public function disable(UserAccount $userAccount): void
+    {
+        $userAccount->enabled = false;
+    }
 }

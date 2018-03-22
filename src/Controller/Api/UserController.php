@@ -178,6 +178,64 @@ class UserController extends Controller
     }
 
     /**
+     * @Route("/{userAccountId}/enable", name="enable", requirements={
+     *     "userAccountId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+     * })
+     * @Method("POST")
+     * @Security("is_granted('ROLE_CLIENT')")
+     *
+     * @param string                $userAccountId
+     * @param UserAccountRepository $repository
+     * @param UserAccountModel      $model
+     * @return Response
+     */
+    public function enable(
+        string $userAccountId,
+        UserAccountRepository $repository,
+        UserAccountModel $model
+    ): Response {
+
+        $userAccount = $repository->find($userAccountId);
+        if (!$userAccount) {
+            throw new NotFoundHttpException('User account not found.');
+        }
+
+        $model->enable($userAccount);
+        $this->saveDatabase();
+
+        return $this->generateProfileResponse($userAccount);
+    }
+
+    /**
+     * @Route("/{userAccountId}/disable", name="disable", requirements={
+     *     "userAccountId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+     * })
+     * @Method("POST")
+     * @Security("is_granted('ROLE_CLIENT')")
+     *
+     * @param string                $userAccountId
+     * @param UserAccountRepository $repository
+     * @param UserAccountModel      $model
+     * @return Response
+     */
+    public function disable(
+        string $userAccountId,
+        UserAccountRepository $repository,
+        UserAccountModel $model
+    ): Response {
+
+        $userAccount = $repository->find($userAccountId);
+        if (!$userAccount) {
+            throw new NotFoundHttpException('User account not found.');
+        }
+
+        $model->disable($userAccount);
+        $this->saveDatabase();
+
+        return $this->generateProfileResponse($userAccount);
+    }
+
+    /**
      * Generate a response containing the user account's profile.
      *
      * @param UserAccount $userAccount
