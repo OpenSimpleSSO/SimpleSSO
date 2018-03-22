@@ -26,6 +26,6 @@ class RegistrationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefault('data_class', Registration::class);
-        $resolver->setDefault('label_format', 'userManagement.registration.%name%');
+        $resolver->setDefault('label_format', 'userManagement.register.%name%');
     }
 }

@@ -126,6 +126,17 @@ class UserAccountModel
     }
 
     /**
+     * Generate a new token that expires at the given date.
+     *
+     * @param UserAccount $userAccount
+     */
+    public function generateToken(UserAccount $userAccount)
+    {
+        $userAccount->token = Uuid::uuid4()->toString();
+        $userAccount->tokenExpirationDate = $this->tokenModel->getExpirationDate(self::TOKEN_VALIDITY_INTERVAL);
+    }
+
+    /**
      * @param UserAccount $userAccount
      */
     public function verifyEmailAddress(UserAccount $userAccount): void
@@ -148,17 +159,6 @@ class UserAccountModel
             $userAccount->emailAddressVerified = false;
             $this->generateToken($userAccount);
         }
-    }
-
-    /**
-     * Generate a new token that expires at the given date.
-     *
-     * @param UserAccount $userAccount
-     */
-    private function generateToken(UserAccount $userAccount)
-    {
-        $userAccount->token = Uuid::uuid4()->toString();
-        $userAccount->tokenExpirationDate = $this->tokenModel->getExpirationDate(self::TOKEN_VALIDITY_INTERVAL);
     }
 
     /**

@@ -4,6 +4,7 @@ attribute:
         organization: "Entreprise"
         firstName: "Prénom"
         lastName: "Nom"
+        displayName: "Nom"
         emailAddress: "Adresse e-mail"
         password: "Mot de passe"
 
@@ -25,7 +26,7 @@ email:
 
 
 userManagement:
-    registration:
+    register:
         title: "Inscription"
         firstName: "Votre prénom"
         lastName: "Votre nom"
@@ -35,11 +36,24 @@ userManagement:
         passwordRepeat: "Répétez votre mot de passe"
         submit: "Créer mon compte"
 
-    confirmEmailAddress:
-        title: "Adresse e-mail vérifiée"
-        message: "Votre adresse e-mail a été vérifiée avec succès."
-
     login:
         title: "Connexion"
         login: "Se connecter"
         register: "Pas encore de compte ? Inscrivez-vous"
+
+
+
+userProfile:
+    show:
+        title: "Votre profil utilisateur"
+        emailAddressVerified: "Adresse e-mail vérifiée"
+        emailAddressUnverified: "Adresse e-mail non vérifiée"
+        sendVerificationEmail: "Renvoyer un e-mail de vérification"
+
+    sendVerificationEmail:
+        success: "Un e-mail vous a été envoyé sur votre adresse %emailAddress%. Veuillez consulter votre boîte de réception et cliquer sur le lien présent à l’intérieur de celui-ci. Si vous ne trouvez pas l’e-mail, pensez à vérifier vos courriers indésirables."
+
+    confirmEmailAddress:
+        title: "Adresse e-mail vérifiée"
+        message: "Votre adresse e-mail %emailAddress% a été vérifiée avec succès."
+        profile: "Voir votre profil utilisateur"

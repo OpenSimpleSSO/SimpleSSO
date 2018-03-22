@@ -4,5 +4,7 @@
 
 {% block body %}
     <p>{{ 'message'|tr({ emailAddress: userAccount.emailAddress }) }}</p>
+
+    <p><a href="{{ path('userProfile.show') }}">{{ 'profile'|tr }}</a></p>
 {% endblock %}
 

@@ -3882,11 +3882,11 @@
         },
         {
             "name": "vinorcola/helper-bundle",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Vinorcola/HelperBundle.git",
-                "reference": "41e195fab978e50a81c4725f24299ace1a1a9147"
+                "reference": "754ce80e3841c4249b302bb817e4e4bc021a023e"
             },
             "require": {
                 "php": "^7.1",
@@ -3907,7 +3907,7 @@
                 }
             ],
             "description": "Bundle providing several helper tools.",
-            "time": "2018-03-12T09:13:50+00:00"
+            "time": "2018-03-22T14:30:14+00:00"
         },
         {
             "name": "zendframework/zend-code",

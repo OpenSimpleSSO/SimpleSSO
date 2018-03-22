@@ -7,5 +7,5 @@
 
     <p>{{ 'email.registration.content'|trans }}</p>
 
-    <p><a href="{{ url('userManagement.confirmEmailAddress', { token: userAccount.token }) }}">{{ 'email.registration.confirmEmailAddress'|trans }}</a></p>
+    <p><a href="{{ url('userProfile.confirmEmailAddress', { token: userAccount.token }) }}">{{ 'email.registration.confirmEmailAddress'|trans }}</a></p>
 {% endblock %}

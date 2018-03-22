@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use SimpleSSO\CommonBundle\Model\OpenSslModel;
 use Symfony\Component\HttpFoundation\Response;
 use Vinorcola\HelperBundle\Controller;
@@ -17,15 +16,12 @@ class MainController extends Controller
     /**
      * @Route("", name="home")
      * @Method("GET")
-     * @Security("is_granted('ROLE_USER')")
      *
      * @return Response
      */
     public function home(): Response
     {
-        return $this->render('Main/home.html.twig', [
-            'user' => $this->getUser(),
-        ]);
+        return $this->redirectToRoute('userProfile.show', [], 301); // Moved permanently
     }
 
     /**
