@@ -19,7 +19,6 @@ userManagement:
         password: "Choisissez votre mot de passe"
         passwordRepeat: "Répétez votre mot de passe"
         submit: "Créer mon compte"
-        emailAddressAlreadyUsed: "Un compte utilisateur existe déjà pour cette adresse e-mail. Si vous avez oublié votre mot de passe, vous pouvez utiliser la fonctionnalité \"mot de passe oublié\" depuis la page de connexion."
 
     login:
         title: "Connexion"

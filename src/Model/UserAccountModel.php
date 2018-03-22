@@ -3,7 +3,7 @@
 namespace App\Model;
 
 use App\Entity\UserAccount;
-use App\Model\Data\UserManagement\Registration;
+use App\Model\Data\Generic\BaseRegistration;
 use App\Repository\UserAccountRepository;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -44,10 +44,10 @@ class UserAccountModel
     }
 
     /**
-     * @param Registration $data
+     * @param BaseRegistration $data
      * @return UserAccount
      */
-    public function create(Registration $data): UserAccount
+    public function create(BaseRegistration $data): UserAccount
     {
         $userAccount = new UserAccount($data->organization);
         $userAccount->setEmailAddress($data->emailAddress);

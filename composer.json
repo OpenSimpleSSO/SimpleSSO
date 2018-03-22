@@ -32,7 +32,7 @@
         "symfony/twig-bundle": "^4.0",
         "symfony/validator": "^4.0",
         "symfony/yaml": "^4.0",
-        "vinorcola/api-server-tools": "^1.0",
+        "vinorcola/api-server-tools": "^1.1",
         "vinorcola/helper-bundle": "^1.0"
     },
     "require-dev": {

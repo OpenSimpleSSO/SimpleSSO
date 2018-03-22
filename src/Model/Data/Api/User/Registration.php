@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\Data\UserManagement;
+namespace App\Model\Data\Api\User;
 
 use App\Model\Data\Generic\BaseRegistration;
 use Symfony\Component\Validator\Constraints;
@@ -11,10 +11,10 @@ class Registration extends BaseRegistration
     /**
      * @var string
      *
-     * @Constraints\NotBlank(message="userManagement.registration.firstName.notBlank")
+     * @Constraints\NotBlank(message="Must provide a first name.")
      * @Constraints\Length(
-     *     min=2, minMessage="userManagement.registration.firstName.minLength",
-     *     max=80, maxMessage="userManagement.registration.firstName.maxLength",
+     *     min=2, minMessage="First name must be at least {{ limit }} characters long.",
+     *     max=80, maxMessage="First name cannot exceed {{ limit }} characters.",
      * )
      */
     public $firstName;
@@ -22,10 +22,10 @@ class Registration extends BaseRegistration
     /**
      * @var string
      *
-     * @Constraints\NotBlank(message="userManagement.registration.lastName.notBlank")
+     * @Constraints\NotBlank(message="Must provide a last name.")
      * @Constraints\Length(
-     *     min=2, minMessage="userManagement.registration.lastName.minLength",
-     *     max=80, maxMessage="userManagement.registration.lastName.maxLength",
+     *     min=2, minMessage="Last name must be at least {{ limit }} characters long.",
+     *     max=80, maxMessage="Last name cannot exceed {{ limit }} characters.",
      * )
      */
     public $lastName;
@@ -33,18 +33,18 @@ class Registration extends BaseRegistration
     /**
      * @var string
      *
-     * @Constraints\NotBlank(message="userManagement.registration.emailAddress.notBlank")
-     * @Constraints\Email(message="userManagement.registration.emailAddress.email")
+     * @Constraints\NotBlank(message="Must provide an email address.")
+     * @Constraints\Email(message="Email address must be valid.")
      */
     public $emailAddress;
 
     /**
      * @var int
      *
-     * @Constraints\NotNull(message="userManagement.registration.organization.notNull")
+     * @Constraints\NotNull(message="Must provide an organization's name.")
      * @Constraints\Length(
-     *     min=2, minMessage="userManagement.registration.organization.minLength",
-     *     max=80, maxMessage="userManagement.registration.organization.maxLength",
+     *     min=2, minMessage="Organization's name must be at least {{ limit }} characters long.",
+     *     max=80, maxMessage="Organization's name cannot exceed {{ limit }} characters.",
      * )
      */
     public $organization;
@@ -52,22 +52,16 @@ class Registration extends BaseRegistration
     /**
      * @var string
      *
-     * @Constraints\NotBlank(message="userManagement.registration.password.notBlank")
+     * @Constraints\NotBlank(message="Must provide a password.")
      * @Constraints\Length(
-     *     min=10, minMessage="userManagement.registration.password.minLength",
-     *     max=50, maxMessage="userManagement.registration.password.maxLength",
+     *     min=10, minMessage="Password must be at least {{ limit }} characters long.",
+     *     max=50, maxMessage="Password cannot exceed {{ limit }} characters.",
      * )
      */
     public $password;
 
     /**
-     * @var string
-     */
-    public $passwordRepeat;
-
-    /**
-     * Validate password. Will check password strength and also that password repeat is OK. We do not use Symfony's
-     * RepeatedType because we want password validation to occur even if passwords are different.
+     * Validate password. Will check password strength.
      *
      * @Constraints\Callback()
      *
@@ -101,29 +95,20 @@ class Registration extends BaseRegistration
         }
         if (!$containsLowerCase) {
             $context
-                ->buildViolation('userManagement.registration.password.lowerCase')
+                ->buildViolation('Password must contains at least one lower case letter.')
                 ->atPath('password')
                 ->addViolation();
         }
         if (!$containsUpperCase) {
             $context
-                ->buildViolation('userManagement.registration.password.upperCase')
+                ->buildViolation('Password must contains at least one upper case letter.')
                 ->atPath('password')
                 ->addViolation();
         }
         if (!$containsDigit) {
             $context
-                ->buildViolation('userManagement.registration.password.digit')
+                ->buildViolation('Password must contains at least one digit.')
                 ->atPath('password')
-                ->addViolation();
-        }
-
-        // Check repeat field.
-
-        if ($this->password !== $this->passwordRepeat) {
-            $context
-                ->buildViolation('userManagement.registration.password.repeat')
-                ->atPath('passwordRepeat')
                 ->addViolation();
         }
     }
