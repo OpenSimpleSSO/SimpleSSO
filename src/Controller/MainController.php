@@ -15,7 +15,7 @@ use Vinorcola\HelperBundle\Controller;
 class MainController extends Controller
 {
     /**
-     * @Route("/home", name="home")
+     * @Route("", name="home")
      * @Method("GET")
      * @Security("is_granted('ROLE_USER')")
      *

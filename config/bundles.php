@@ -13,4 +13,5 @@ return [
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
     Vinorcola\HelperBundle\VinorcolaHelperBundle::class => ['all' => true],
     SimpleSSO\CommonBundle\SimpleSSOCommonBundle::class => ['all' => true],
+    Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle::class => ['all' => true],
 ];

@@ -6,6 +6,7 @@ use App\Entity\UserAccount;
 use App\Model\Data\Api\User\PasswordChange;
 use App\Model\Data\Api\User\ProfileEdition;
 use App\Model\Data\Api\User\Registration;
+use App\Model\EmailModel;
 use App\Model\JsonRequestModel;
 use App\Model\UserAccountModel;
 use App\Repository\UserAccountRepository;
@@ -55,12 +56,14 @@ class UserController extends Controller
      * @param Request          $request
      * @param JsonRequestModel $jsonRequestModel
      * @param UserAccountModel $model
+     * @param EmailModel       $emailModel
      * @return Response
      */
     public function register(
         Request $request,
         JsonRequestModel $jsonRequestModel,
-        UserAccountModel $model
+        UserAccountModel $model,
+        EmailModel $emailModel
     ): Response {
 
         $data = $jsonRequestModel->handleRequest($request, Registration::class);
@@ -69,6 +72,7 @@ class UserController extends Controller
             try {
                 $userAccount = $model->create($data);
                 $this->saveDatabase();
+                $emailModel->sendRegistrationEmail($userAccount);
 
                 return new Response([
                     'id' => $userAccount->getId(),
@@ -100,6 +104,7 @@ class UserController extends Controller
      * @param UserAccountRepository $repository
      * @param JsonRequestModel      $jsonRequestModel
      * @param UserAccountModel      $model
+     * @param EmailModel            $emailModel
      * @return Response
      */
     public function editProfile(
@@ -107,7 +112,8 @@ class UserController extends Controller
         string $userAccountId,
         UserAccountRepository $repository,
         JsonRequestModel $jsonRequestModel,
-        UserAccountModel $model
+        UserAccountModel $model,
+        EmailModel $emailModel
     ): Response {
 
         $userAccount = $repository->find($userAccountId);
@@ -115,12 +121,17 @@ class UserController extends Controller
             throw new NotFoundHttpException('User account not found.');
         }
 
+        /** @var ProfileEdition $data */
         $data = $jsonRequestModel->handleRequest($request, ProfileEdition::class);
         /** @var ConstraintViolationListInterface $errors */
         if ($jsonRequestModel->isValid($data, $errors)) {
             try {
+                $emailAddressChanged = $data->emailAddress !== $userAccount->emailAddress;
                 $model->editProfile($userAccount, $data);
                 $this->saveDatabase();
+                if ($emailAddressChanged) {
+                    $emailModel->sendEmailAddressVerificationEmail($userAccount);
+                }
 
                 return $this->generateProfileResponse($userAccount);
             } catch (UniqueConstraintViolationException $exception) {
@@ -245,7 +256,7 @@ class UserController extends Controller
     {
         return new Response([
             'id'                   => $userAccount->getId(),
-            'organization'         => $userAccount->getOrganization(),
+            'organization'         => $userAccount->organization,
             'emailAddress'         => $userAccount->emailAddress,
             'emailAddressVerified' => $userAccount->emailAddressVerified,
             'firstName'            => $userAccount->firstName,

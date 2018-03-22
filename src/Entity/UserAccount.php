@@ -28,7 +28,7 @@ class UserAccount implements UserInterface
      *
      * @Mapping\Column(type="string", length=80)
      */
-    private $organization;
+    public $organization;
 
     /**
      * @var string
@@ -103,54 +103,14 @@ class UserAccount implements UserInterface
     /**
      * UserAccount constructor.
      *
-     * @param string $organization
-     */
-    public function __construct(string $organization)
-    {
-        $this->id = Uuid::uuid4()->toString();
-        $this->organization = $organization;
-    }
-
-    /**
-     * @param string $organization
-     */
-    public function setOrganization(string $organization): void
-    {
-        $this->organization = $organization;
-    }
-
-    /**
-     * Setup the email address.
-     *
      * @param string $emailAddress
      */
-    public function setEmailAddress(string $emailAddress): void
+    public function __construct(string $emailAddress)
     {
-        if ($emailAddress !== $this->emailAddress) {
-            $this->emailAddress = $emailAddress;
-            $this->uniqueEmailAddress = mb_strtolower($emailAddress);
-            $this->emailAddressVerified = false;
-        }
-    }
-
-    /**
-     * Generate a new token that expires to the given date.
-     *
-     * @param DateTime $tokenExpirationDate
-     */
-    public function generateToken(DateTime $tokenExpirationDate)
-    {
-        $this->token = Uuid::uuid4()->toString();
-        $this->tokenExpirationDate = $tokenExpirationDate;
-    }
-
-    /**
-     * Erase the current token.
-     */
-    public function eraseToken()
-    {
-        $this->token = null;
-        $this->tokenExpirationDate = null;
+        $this->id = Uuid::uuid4()->toString();
+        $this->emailAddress = $emailAddress;
+        $this->uniqueEmailAddress = mb_strtolower($emailAddress);
+        $this->emailAddressVerified = false;
     }
 
     /**
@@ -159,14 +119,6 @@ class UserAccount implements UserInterface
     public function getId(): string
     {
         return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOrganization(): string
-    {
-        return $this->organization;
     }
 
     /**

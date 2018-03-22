@@ -1,0 +1,11 @@
+{% extends 'Email/baseEmail.html.twig' %}
+
+
+
+{% block body %}
+    <h1>{{ 'email.emailAddressVerification.greeting'|trans({ '%displayName%': userAccount.displayName }) }}</h1>
+
+    <p>{{ 'email.emailAddressVerification.content'|trans }}</p>
+
+    <p><a href="{{ url('userManagement.confirmEmailAddress', { token: userAccount.token }) }}">{{ 'email.emailAddressVerification.confirmEmailAddress'|trans }}</a></p>
+{% endblock %}

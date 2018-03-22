@@ -9,6 +9,21 @@ attribute:
 
 
 
+email:
+    registration:
+        subject: "Inscription"
+        greeting: "Bonjour %displayName%,"
+        content: "Votre inscripion est confirmée. Veuillez cliquer sur le lien ci-dessous pour valider votre adresse e-mail."
+        confirmEmailAddress: "Confirmer l’adresse e-mail"
+
+    emailAddressVerification:
+        subject: "Vérification de votre adresse e-mail"
+        greeting: "Bonjour %displayName%,"
+        content: "Vous devez valider votre adresse e-mail. Pour cela, veuillez cliquer sur le lien ci-dessous."
+        confirmEmailAddress: "Confirmer l’adresse e-mail"
+
+
+
 userManagement:
     registration:
         title: "Inscription"
@@ -19,6 +34,10 @@ userManagement:
         password: "Choisissez votre mot de passe"
         passwordRepeat: "Répétez votre mot de passe"
         submit: "Créer mon compte"
+
+    confirmEmailAddress:
+        title: "Adresse e-mail vérifiée"
+        message: "Votre adresse e-mail a été vérifiée avec succès."
 
     login:
         title: "Connexion"

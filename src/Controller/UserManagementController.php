@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Form\UserManagement\RegistrationType;
 use App\Model\AuthTokenModel;
+use App\Model\EmailModel;
 use App\Model\UserAccountModel;
 use App\Repository\ClientRepository;
+use App\Repository\UserAccountRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use LogicException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -91,12 +93,14 @@ class UserManagementController extends Controller
 
     /**
      * @Route("/register", name="registration")
+     * @Method({"GET", "POST"})
      *
      * @param Request          $request
      * @param UserAccountModel $model
+     * @param EmailModel       $emailModel
      * @return Response
      */
-    public function registration(Request $request, UserAccountModel $model): Response
+    public function registration(Request $request, UserAccountModel $model, EmailModel $emailModel): Response
     {
         $form = $this->createForm(RegistrationType::class);
         $form->handleRequest($request);
@@ -105,6 +109,7 @@ class UserManagementController extends Controller
                 $userAccount = $model->create($form->getData());
                 $this->saveDatabase();
                 $model->forceAuthentication($userAccount);
+                $emailModel->sendRegistrationEmail($userAccount);
 
                 return $this->redirectToRoute('main.home');
             } catch (UniqueConstraintViolationException $exception) {
@@ -114,6 +119,35 @@ class UserManagementController extends Controller
 
         return $this->render('UserManagement/register.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/confirm-email-address/{token}", name="confirmEmailAddress", requirements={
+     *     "token": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+     * })
+     * @Method("GET")
+     *
+     * @param string                $token
+     * @param UserAccountRepository $repository
+     * @param UserAccountModel      $model
+     * @return Response
+     */
+    public function confirmEmailAddress(
+        string $token,
+        UserAccountRepository $repository,
+        UserAccountModel $model
+    ): Response {
+        $userAccount = $repository->findByToken($token);
+        if (!$userAccount) {
+            throw new NotFoundHttpException();
+        }
+
+        $model->verifyEmailAddress($userAccount);
+        $this->saveDatabase();
+
+        return $this->render('UserManagement/confirmEmailAddress.html.twig', [
+            'userAccount' => $userAccount,
         ]);
     }
 
