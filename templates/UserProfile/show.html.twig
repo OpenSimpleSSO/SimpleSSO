@@ -23,14 +23,45 @@
                     )</span>
                 </td>
             </tr>
-            <tr>
-                <th>{{ 'organization'|tra('userAccount') }}</th>
-                <td>{{ userAccount.organization }}</td>
-            </tr>
+            {% for attribute in attributes %}
+                <tr>
+                    <th>{{ attribute.title }}</th>
+                    <td>
+                        {%- if userAccount.getAttribute(attribute.key) is not none -%}
+                            {%- if attribute.type == constant('TYPE_BOOL', attribute) -%}
+                                {%- if userAccount.getAttribute(attribute.key) -%}
+                                    <span class="text-success fa fa-check"></span> {{ 'yes'|tr }}
+                                {%- else -%}
+                                    <span class="text-danger fa fa-remove"></span> {{ 'no'|tr }}
+                                {%- endif -%}
+                            {%- elseif attribute.type == constant('TYPE_DATE', attribute) -%}
+                                {{ userAccount.getAttribute(attribute.key)|localizeddate('long', 'none') }}
+                            {%- elseif attribute.type == constant('TYPE_DATETIME', attribute) -%}
+                                {{ userAccount.getAttribute(attribute.key)|localizeddate('long', 'medium') }}
+                            {%- else -%}
+                                {{ userAccount.getAttribute(attribute.key) }}
+                            {%- endif -%}
+                        {%- endif -%}
+                    </td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
-    <p><a href="{{ path('userProfile.edit') }}">{{ 'edit'|tr }}</a></p>
+    <p>
+        <a href="{{ path('userProfile.edit') }}" class="btn btn-primary"><span class="fa fa-pencil"></span> {{ 'edit'|tr }}</a>
+        <a href="{{ path('userManagement.logout') }}" class="btn btn-primary"><span class="fa fa-sign-out"></span> {{ 'logout'|tr }}</a>
+    </p>
+
+    {% if is_granted('ROLE_SIMPLESSO_ADMIN') %}
+        <div class="alert alert-danger">
+            <h2>{{ 'admin.title'|tr }}</h2>
+
+            <ul>
+                <li><a href="{{ path('admin.userAccountAttribute.list') }}">{{ 'admin.userAccountAttributes'|tr }}</a></li>
+            </ul>
+        </div>
+    {% endif %}
 {% endblock %}
 
 

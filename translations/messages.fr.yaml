@@ -1,12 +1,41 @@
 
 attribute:
     userAccount:
-        organization: "Entreprise"
+        id: "Identifiant unique"
         firstName: "Prénom"
         lastName: "Nom"
         displayName: "Nom"
         emailAddress: "Adresse e-mail"
         password: "Mot de passe"
+    userAccountAttribute:
+        title: "Description"
+        key: "Clé"
+        type: "Type de valeur"
+        typeValue:
+            bool: "Booléen"
+            date: "Date"
+            datetime: "Date & Heure"
+            number: "Nombre"
+            text: "Texte"
+
+
+
+admin:
+    userAccountAttribute:
+        list:
+            title: "Liste des attributs des comptes utilisateurs"
+            add: "Ajouter un nouvel attribut"
+            edit: "Modifier"
+
+        create:
+            title: "Ajout d’un nouvel attribut pour les comptes utilisateurs"
+            submit: "Ajouter l’attribut"
+            cancel: "Annuler l’ajout"
+
+        edit:
+            title: "Modification de l’attribut"
+            submit: "Enregistrer les modifications"
+            cancel: "Annuler les modifications"
 
 
 
@@ -31,7 +60,6 @@ userManagement:
         firstName: "Votre prénom"
         lastName: "Votre nom"
         emailAddress: "Votre adresse e-mail"
-        organization: "Votre entreprise"
         password: "Choisissez votre mot de passe"
         passwordRepeat: "Répétez votre mot de passe"
         submit: "Créer mon compte"
@@ -48,17 +76,22 @@ userProfile:
         title: "Votre profil utilisateur"
         emailAddressVerified: "Adresse e-mail vérifiée"
         emailAddressUnverified: "Adresse e-mail non vérifiée"
+        yes: "Oui"
+        no: "Non"
         sendVerificationEmail: "Renvoyer un e-mail de vérification"
         edit: "Modifier le profil"
+        logout: "Se déconnecter"
+        admin:
+            title: "Administration"
+            userAccountAttributes: "Les attributs des comptes utilisateurs"
 
     edit:
         title: "Modification de votre profil utilisateur"
         firstName: "Votre prénom"
         lastName: "Votre nom"
         emailAddress: "Votre adresse e-mail"
-        organization: "Votre entreprise"
         submit: "Enregistrer les modifications"
-        back: "Annuler les modifications"
+        cancel: "Annuler les modifications"
         success: "Votre profil utilisateur a été mis à jour."
 
     sendVerificationEmail:

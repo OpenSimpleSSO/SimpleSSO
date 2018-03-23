@@ -1,11 +1,4 @@
 {% extends 'base.html.twig' %}
-{% form_theme form _self %}
-
-
-
-{% block _profile_edition_extraData_row %}
-    {{ form_widget(form) }}
-{% endblock %}
 
 
 
@@ -14,7 +7,7 @@
         {{ form_widget(form) }}
         <div class="form-group">
             <button class="btn btn-primary">{{ 'submit'|tr }}</button>
-            <a href="{{ path('userProfile.show') }}" class="btn btn-secondary">{{ 'cancel'|tr }}</a>
+            <a href="{{ path('admin.userAccountAttribute.list') }}" class="btn btn-secondary">{{ 'cancel'|tr }}</a>
         </div>
     {{ form_end(form) }}
 {% endblock %}

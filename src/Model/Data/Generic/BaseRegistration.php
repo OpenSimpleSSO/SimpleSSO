@@ -20,11 +20,6 @@ class BaseRegistration
     public $emailAddress;
 
     /**
-     * @var int
-     */
-    public $organization;
-
-    /**
      * @var string
      */
     public $password;
@@ -33,4 +28,9 @@ class BaseRegistration
      * @var string
      */
     public $passwordRepeat;
+
+    /**
+     * @var array
+     */
+    public $extraData = [];
 }

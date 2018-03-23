@@ -37,4 +37,4 @@ security:
                 path: userManagement.logout
 
     access_control:
-        - { path: ^/admin, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/admin, roles: [ IS_AUTHENTICATED_FULLY, ROLE_SIMPLESSSO_ADMIN ] }

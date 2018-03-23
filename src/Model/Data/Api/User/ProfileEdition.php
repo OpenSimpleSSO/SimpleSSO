@@ -38,17 +38,6 @@ class ProfileEdition extends BaseProfileEdition
     public $emailAddress;
 
     /**
-     * @var int
-     *
-     * @Constraints\NotNull(message="Must provide an organization's name.")
-     * @Constraints\Length(
-     *     min=2, minMessage="Organization's name must be at least {{ limit }} characters long.",
-     *     max=80, maxMessage="Organization's name cannot exceed {{ limit }} characters.",
-     * )
-     */
-    public $organization;
-
-    /**
      * @var array
      *
      * @Constraints\All({

@@ -26,13 +26,6 @@ class UserAccount implements UserInterface
     /**
      * @var string
      *
-     * @Mapping\Column(type="string", length=80)
-     */
-    public $organization;
-
-    /**
-     * @var string
-     *
      * @Mapping\Column(type="string", length=254)
      */
     public $emailAddress;
@@ -101,6 +94,13 @@ class UserAccount implements UserInterface
     public $tokenExpirationDate;
 
     /**
+     * @var array
+     *
+     * @Mapping\Column(type="json", options={"jsonb": true})
+     */
+    public $extraData;
+
+    /**
      * UserAccount constructor.
      *
      * @param string $emailAddress
@@ -127,6 +127,19 @@ class UserAccount implements UserInterface
     public function getDisplayName(): string
     {
         return $this->firstName . ' ' . $this->lastName;
+    }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function getAttribute(string $key)
+    {
+        if (!key_exists($key, $this->extraData)) {
+            return null;
+        }
+
+        return $this->extraData[$key];
     }
 
     // UserInterface methods.
