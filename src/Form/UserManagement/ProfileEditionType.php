@@ -18,9 +18,7 @@ class ProfileEditionType extends AbstractType
             ->add('lastName', TextType::class)
             ->add('emailAddress', EmailType::class)
             ->add('organization', TextType::class)
-            ->add('extraData', AttributesType::class, [
-                'label' => false,
-            ]);
+            ->add('extraData', AttributesType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -84,6 +84,7 @@ class UserAccountModel
         $userAccount->roles = [ 'ROLE_USER' ];
         $userAccount->password = $this->passwordEncoder->encodePassword($userAccount, $data->password);
         $userAccount->enabled = true;
+        $this->updateExtraData($userAccount, $data->extraData);
         $this->repository->save($userAccount);
 
         return $userAccount;
@@ -136,26 +137,7 @@ class UserAccountModel
         if ($data instanceof ApiProfileEdition) {
             $userAccount->roles = $data->roles;
         }
-        $userAccount->extraData = [];
-        foreach ($this->attributeModel->get() as $attribute) {
-            $value = $data->extraData[$attribute->key];
-            if ($value === null) {
-                $userAccount->extraData[$attribute->key] = null;
-            } else {
-                switch ($attribute->type) {
-                    case UserAccountAttribute::TYPE_DATE:
-                        $userAccount->extraData[$attribute->key] = $data->extraData[$attribute->key]->format('Y-m-d');
-                        break;
-
-                    case UserAccountAttribute::TYPE_DATETIME:
-                        $userAccount->extraData[$attribute->key] = $data->extraData[$attribute->key]->format(DATE_ATOM);
-                        break;
-
-                    default:
-                        $userAccount->extraData[$attribute->key] = $value;
-                }
-            }
-        }
+        $this->updateExtraData($userAccount, $data->extraData);
     }
 
     /**
@@ -238,5 +220,37 @@ class UserAccountModel
     {
         $userAccount->token = null;
         $userAccount->tokenExpirationDate = null;
+    }
+
+    /**
+     * @param UserAccount $userAccount
+     * @param array       $extraData
+     */
+    private function updateExtraData(UserAccount $userAccount, array $extraData)
+    {
+        $userAccount->extraData = [];
+        foreach ($this->attributeModel->get() as $attribute) {
+            $value = $extraData[$attribute->key];
+            if ($value === null) {
+                $userAccount->extraData[$attribute->key] = null;
+            } else {
+                switch ($attribute->type) {
+                    case UserAccountAttribute::TYPE_DATE:
+                        $userAccount->extraData[$attribute->key] = $value instanceof DateTime ?
+                            $value->format('Y-m-d') :
+                            $value;
+                        break;
+
+                    case UserAccountAttribute::TYPE_DATETIME:
+                        $userAccount->extraData[$attribute->key] = $value instanceof DateTime ?
+                            $value->format(DATE_ATOM) :
+                            $value;
+                        break;
+
+                    default:
+                        $userAccount->extraData[$attribute->key] = $value;
+                }
+            }
+        }
     }
 }

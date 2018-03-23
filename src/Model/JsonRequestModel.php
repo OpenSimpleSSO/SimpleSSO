@@ -15,13 +15,20 @@ class JsonRequestModel
     private $validator;
 
     /**
+     * @var UserAccountAttributeModel
+     */
+    private $attributeModel;
+
+    /**
      * JsonRequestModel constructor.
      *
-     * @param ValidatorInterface $validator
+     * @param ValidatorInterface        $validator
+     * @param UserAccountAttributeModel $attributeModel
      */
-    public function __construct(ValidatorInterface $validator)
+    public function __construct(ValidatorInterface $validator, UserAccountAttributeModel $attributeModel)
     {
         $this->validator = $validator;
+        $this->attributeModel = $attributeModel;
     }
 
     /**
@@ -37,8 +44,13 @@ class JsonRequestModel
         }
 
         $data = new $dataClass;
+        $hasExtraData = property_exists($dataClass, 'extraData');
         foreach ($content as $key => $value) {
-            $data->$key = $value;
+            if (property_exists($dataClass, $key)) {
+                $data->$key = $value;
+            } elseif ($hasExtraData) {
+                $data->extraData[$key] = $value;
+            }
         }
 
         return $data;

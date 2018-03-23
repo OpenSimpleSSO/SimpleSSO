@@ -1,4 +1,11 @@
 {% extends 'base.html.twig' %}
+{% form_theme form _self %}
+
+
+
+{% block _registration_extraData_row %}
+    {{ form_widget(form) }}
+{% endblock %}
 
 
 

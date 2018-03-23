@@ -20,7 +20,8 @@ class RegistrationType extends AbstractType
             ->add('emailAddress', EmailType::class)
             ->add('organization', TextType::class)
             ->add('password', PasswordType::class)
-            ->add('passwordRepeat', PasswordType::class);
+            ->add('passwordRepeat', PasswordType::class)
+            ->add('extraData', AttributesType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

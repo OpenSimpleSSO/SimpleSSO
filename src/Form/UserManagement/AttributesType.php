@@ -47,6 +47,7 @@ class AttributesType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setDefault('label', false);
         $resolver->setDefault('translation_domain', false);
     }
 

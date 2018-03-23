@@ -33,4 +33,9 @@ class BaseRegistration
      * @var string
      */
     public $passwordRepeat;
+
+    /**
+     * @var array
+     */
+    public $extraData = [];
 }
