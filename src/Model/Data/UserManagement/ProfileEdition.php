@@ -2,7 +2,6 @@
 
 namespace App\Model\Data\UserManagement;
 
-use App\Entity\UserAccount;
 use App\Model\Data\Generic\BaseProfileEdition;
 use Symfony\Component\Validator\Constraints;
 

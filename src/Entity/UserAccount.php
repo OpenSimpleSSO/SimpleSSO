@@ -136,6 +136,19 @@ class UserAccount implements UserInterface
         return $this->firstName . ' ' . $this->lastName;
     }
 
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function getAttribute(string $key)
+    {
+        if (!key_exists($key, $this->extraData)) {
+            return null;
+        }
+
+        return $this->extraData[$key];
+    }
+
     // UserInterface methods.
 
     public function getRoles()

@@ -14,6 +14,11 @@ class UserAccountAttributeModel
     private $repository;
 
     /**
+     * @var UserAccountAttribute[]|null
+     */
+    private $attributes;
+
+    /**
      * UserAccountAttributeModel constructor.
      *
      * @param UserAccountAttributeRepository $repository
@@ -21,6 +26,18 @@ class UserAccountAttributeModel
     public function __construct(UserAccountAttributeRepository $repository)
     {
         $this->repository = $repository;
+    }
+
+    /**
+     * @return UserAccountAttribute[]
+     */
+    public function get(): array
+    {
+        if (!$this->attributes) {
+            $this->attributes = $this->repository->findAll();
+        }
+
+        return $this->attributes;
     }
 
     /**

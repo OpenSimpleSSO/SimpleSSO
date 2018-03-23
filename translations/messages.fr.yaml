@@ -78,9 +78,11 @@ userProfile:
         title: "Votre profil utilisateur"
         emailAddressVerified: "Adresse e-mail vérifiée"
         emailAddressUnverified: "Adresse e-mail non vérifiée"
+        yes: "Oui"
+        no: "Non"
         sendVerificationEmail: "Renvoyer un e-mail de vérification"
         edit: "Modifier le profil"
-        logout: "Se décoinnecter"
+        logout: "Se déconnecter"
         admin:
             title: "Administration"
             userAccountAttributes: "Les attributs des comptes utilisateurs"

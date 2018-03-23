@@ -3,11 +3,13 @@
 namespace App\Controller\Api;
 
 use App\Entity\UserAccount;
+use App\Entity\UserAccountAttribute;
 use App\Model\Data\Api\User\PasswordChange;
 use App\Model\Data\Api\User\ProfileEdition;
 use App\Model\Data\Api\User\Registration;
 use App\Model\EmailModel;
 use App\Model\JsonRequestModel;
+use App\Model\UserAccountAttributeModel;
 use App\Model\UserAccountModel;
 use App\Repository\UserAccountRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -34,18 +36,23 @@ class UserController extends Controller
      * @Method("GET")
      * @Security("is_granted('ROLE_CLIENT')")
      *
-     * @param string                $userAccountId
-     * @param UserAccountRepository $repository
+     * @param string                    $userAccountId
+     * @param UserAccountRepository     $repository
+     * @param UserAccountAttributeModel $attributeModel
      * @return Response
      */
-    public function profile(string $userAccountId, UserAccountRepository $repository): Response
-    {
+    public function profile(
+        string $userAccountId,
+        UserAccountRepository $repository,
+        UserAccountAttributeModel $attributeModel
+    ): Response {
+
         $userAccount = $repository->find($userAccountId);
         if (!$userAccount) {
             throw new NotFoundHttpException();
         }
 
-        return $this->generateProfileResponse($userAccount);
+        return $this->generateProfileResponse($userAccount, $attributeModel->get());
     }
 
     /**
@@ -99,18 +106,20 @@ class UserController extends Controller
      * @Method("PUT")
      * @Security("is_granted('ROLE_CLIENT')")
      *
-     * @param Request               $request
-     * @param string                $userAccountId
-     * @param UserAccountRepository $repository
-     * @param JsonRequestModel      $jsonRequestModel
-     * @param UserAccountModel      $model
-     * @param EmailModel            $emailModel
+     * @param Request                   $request
+     * @param string                    $userAccountId
+     * @param UserAccountRepository     $repository
+     * @param UserAccountAttributeModel $attributeModel
+     * @param JsonRequestModel          $jsonRequestModel
+     * @param UserAccountModel          $model
+     * @param EmailModel                $emailModel
      * @return Response
      */
     public function editProfile(
         Request $request,
         string $userAccountId,
         UserAccountRepository $repository,
+        UserAccountAttributeModel $attributeModel,
         JsonRequestModel $jsonRequestModel,
         UserAccountModel $model,
         EmailModel $emailModel
@@ -133,7 +142,7 @@ class UserController extends Controller
                     $emailModel->sendEmailAddressVerificationEmail($userAccount);
                 }
 
-                return $this->generateProfileResponse($userAccount);
+                return $this->generateProfileResponse($userAccount, $attributeModel->get());
             } catch (UniqueConstraintViolationException $exception) {
                 $errors->add(new ConstraintViolation(
                     'Email address already used.',
@@ -195,14 +204,16 @@ class UserController extends Controller
      * @Method("POST")
      * @Security("is_granted('ROLE_CLIENT')")
      *
-     * @param string                $userAccountId
-     * @param UserAccountRepository $repository
-     * @param UserAccountModel      $model
+     * @param string                         $userAccountId
+     * @param UserAccountRepository          $repository
+     * @param UserAccountAttributeModel $attributeModel
+     * @param UserAccountModel               $model
      * @return Response
      */
     public function enable(
         string $userAccountId,
         UserAccountRepository $repository,
+        UserAccountAttributeModel $attributeModel,
         UserAccountModel $model
     ): Response {
 
@@ -214,7 +225,7 @@ class UserController extends Controller
         $model->enable($userAccount);
         $this->saveDatabase();
 
-        return $this->generateProfileResponse($userAccount);
+        return $this->generateProfileResponse($userAccount, $attributeModel->get());
     }
 
     /**
@@ -224,14 +235,16 @@ class UserController extends Controller
      * @Method("POST")
      * @Security("is_granted('ROLE_CLIENT')")
      *
-     * @param string                $userAccountId
-     * @param UserAccountRepository $repository
-     * @param UserAccountModel      $model
+     * @param string                         $userAccountId
+     * @param UserAccountRepository          $repository
+     * @param UserAccountAttributeModel $attributeModel
+     * @param UserAccountModel               $model
      * @return Response
      */
     public function disable(
         string $userAccountId,
         UserAccountRepository $repository,
+        UserAccountAttributeModel $attributeModel,
         UserAccountModel $model
     ): Response {
 
@@ -243,18 +256,19 @@ class UserController extends Controller
         $model->disable($userAccount);
         $this->saveDatabase();
 
-        return $this->generateProfileResponse($userAccount);
+        return $this->generateProfileResponse($userAccount, $attributeModel->get());
     }
 
     /**
      * Generate a response containing the user account's profile.
      *
-     * @param UserAccount $userAccount
+     * @param UserAccountAttribute[] $attributes
+     * @param UserAccount            $userAccount
      * @return Response
      */
-    private function generateProfileResponse(UserAccount $userAccount): Response
+    private function generateProfileResponse(UserAccount $userAccount, array $attributes): Response
     {
-        return new Response([
+        $data = [
             'id'                   => $userAccount->getId(),
             'organization'         => $userAccount->organization,
             'emailAddress'         => $userAccount->emailAddress,
@@ -263,6 +277,11 @@ class UserController extends Controller
             'lastName'             => $userAccount->lastName,
             'roles'                => $userAccount->roles,
             'enabled'              => $userAccount->enabled,
-        ]);
+        ];
+        foreach ($attributes as $attribute) {
+            $data[$attribute->key] = $userAccount->getAttribute($attribute->key);
+        }
+
+        return new Response($data);
     }
 }

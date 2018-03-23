@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\UserAccount;
 use App\Form\UserManagement\ProfileEditionType;
 use App\Model\EmailModel;
+use App\Model\UserAccountAttributeModel;
 use App\Model\UserAccountModel;
 use App\Repository\UserAccountRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -27,12 +28,14 @@ class UserProfileController extends Controller
      * @Method("GET")
      * @Security("is_granted('ROLE_USER')")
      *
+     * @param UserAccountAttributeModel $attributeModel
      * @return Response
      */
-    public function show(): Response
+    public function show(UserAccountAttributeModel $attributeModel): Response
     {
         return $this->render('UserProfile/show.html.twig', [
             'userAccount' => $this->getUser(),
+            'attributes'  => $attributeModel->get(),
         ]);
     }
 
@@ -46,8 +49,12 @@ class UserProfileController extends Controller
      * @param EmailModel       $emailModel
      * @return Response
      */
-    public function edit(Request $request, UserAccountModel $model, EmailModel $emailModel): Response
-    {
+    public function edit(
+        Request $request,
+        UserAccountModel $model,
+        EmailModel $emailModel
+    ): Response {
+
         /** @var UserAccount $userAccount */
         $userAccount = $this->getUser();
         $initialEmailAddress = $userAccount->emailAddress;

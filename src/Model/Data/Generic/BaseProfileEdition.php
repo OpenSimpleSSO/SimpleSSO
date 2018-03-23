@@ -23,4 +23,9 @@ class BaseProfileEdition
      * @var int
      */
     public $organization;
+
+    /**
+     * @var array
+     */
+    public $extraData = [];
 }

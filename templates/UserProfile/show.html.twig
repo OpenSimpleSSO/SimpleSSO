@@ -27,6 +27,28 @@
                 <th>{{ 'organization'|tra('userAccount') }}</th>
                 <td>{{ userAccount.organization }}</td>
             </tr>
+            {% for attribute in attributes %}
+                <tr>
+                    <th>{{ attribute.title }}</th>
+                    <td>
+                        {%- if userAccount.getAttribute(attribute.key) is not none -%}
+                            {%- if attribute.type == constant('TYPE_BOOL', attribute) -%}
+                                {%- if userAccount.getAttribute(attribute.key) -%}
+                                    <span class="text-success fa fa-check"></span> {{ 'yes'|tr }}
+                                {%- else -%}
+                                    <span class="text-danger fa fa-remove"></span> {{ 'no'|tr }}
+                                {%- endif -%}
+                            {%- elseif attribute.type == constant('TYPE_DATE', attribute) -%}
+                                {{ userAccount.getAttribute(attribute.key)|localizeddate('long', 'none') }}
+                            {%- elseif attribute.type == constant('TYPE_DATETIME', attribute) -%}
+                                {{ userAccount.getAttribute(attribute.key)|localizeddate('long', 'medium') }}
+                            {%- else -%}
+                                {{ userAccount.getAttribute(attribute.key) }}
+                            {%- endif -%}
+                        {%- endif -%}
+                    </td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
