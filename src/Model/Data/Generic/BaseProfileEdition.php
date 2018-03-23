@@ -20,11 +20,6 @@ class BaseProfileEdition
     public $emailAddress;
 
     /**
-     * @var int
-     */
-    public $organization;
-
-    /**
      * @var array
      */
     public $extraData = [];

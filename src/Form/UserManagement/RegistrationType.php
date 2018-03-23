@@ -18,7 +18,6 @@ class RegistrationType extends AbstractType
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
             ->add('emailAddress', EmailType::class)
-            ->add('organization', TextType::class)
             ->add('password', PasswordType::class)
             ->add('passwordRepeat', PasswordType::class)
             ->add('extraData', AttributesType::class);

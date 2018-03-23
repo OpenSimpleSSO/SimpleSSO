@@ -26,13 +26,6 @@ class UserAccount implements UserInterface
     /**
      * @var string
      *
-     * @Mapping\Column(type="string", length=80)
-     */
-    public $organization;
-
-    /**
-     * @var string
-     *
      * @Mapping\Column(type="string", length=254)
      */
     public $emailAddress;

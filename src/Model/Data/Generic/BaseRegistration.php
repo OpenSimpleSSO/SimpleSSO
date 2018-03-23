@@ -20,11 +20,6 @@ class BaseRegistration
     public $emailAddress;
 
     /**
-     * @var int
-     */
-    public $organization;
-
-    /**
      * @var string
      */
     public $password;

@@ -78,7 +78,6 @@ class UserAccountModel
     {
         $userAccount = new UserAccount($data->emailAddress);
         $this->generateToken($userAccount);
-        $userAccount->organization = $data->organization;
         $userAccount->firstName = $data->firstName;
         $userAccount->lastName = $data->lastName;
         $userAccount->roles = [ 'ROLE_USER' ];
@@ -100,7 +99,6 @@ class UserAccountModel
         $data->firstName = $userAccount->firstName;
         $data->lastName = $userAccount->lastName;
         $data->emailAddress = $userAccount->emailAddress;
-        $data->organization = $userAccount->organization;
         foreach ($this->attributeModel->get() as $attribute) {
             $value = $userAccount->getAttribute($attribute->key);
             if ($value === null) {
@@ -131,7 +129,6 @@ class UserAccountModel
     public function editProfile(UserAccount $userAccount, BaseProfileEdition $data): void
     {
         $this->updateEmailAddress($userAccount, $data->emailAddress);
-        $userAccount->organization = $data->organization;
         $userAccount->firstName = $data->firstName;
         $userAccount->lastName = $data->lastName;
         if ($data instanceof ApiProfileEdition) {

@@ -36,15 +36,4 @@ class ProfileEdition extends BaseProfileEdition
      * @Constraints\Email(message="userManagement.registration.emailAddress.email")
      */
     public $emailAddress;
-
-    /**
-     * @var int
-     *
-     * @Constraints\NotNull(message="userManagement.registration.organization.notNull")
-     * @Constraints\Length(
-     *     min=2, minMessage="userManagement.registration.organization.minLength",
-     *     max=80, maxMessage="userManagement.registration.organization.maxLength",
-     * )
-     */
-    public $organization;
 }

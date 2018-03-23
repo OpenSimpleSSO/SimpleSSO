@@ -2,7 +2,6 @@
 attribute:
     userAccount:
         id: "Identifiant unique"
-        organization: "Entreprise"
         firstName: "Prénom"
         lastName: "Nom"
         displayName: "Nom"
@@ -61,7 +60,6 @@ userManagement:
         firstName: "Votre prénom"
         lastName: "Votre nom"
         emailAddress: "Votre adresse e-mail"
-        organization: "Votre entreprise"
         password: "Choisissez votre mot de passe"
         passwordRepeat: "Répétez votre mot de passe"
         submit: "Créer mon compte"
@@ -92,7 +90,6 @@ userProfile:
         firstName: "Votre prénom"
         lastName: "Votre nom"
         emailAddress: "Votre adresse e-mail"
-        organization: "Votre entreprise"
         submit: "Enregistrer les modifications"
         cancel: "Annuler les modifications"
         success: "Votre profil utilisateur a été mis à jour."

@@ -270,7 +270,6 @@ class UserController extends Controller
     {
         $data = [
             'id'                   => $userAccount->getId(),
-            'organization'         => $userAccount->organization,
             'emailAddress'         => $userAccount->emailAddress,
             'emailAddressVerified' => $userAccount->emailAddressVerified,
             'firstName'            => $userAccount->firstName,
