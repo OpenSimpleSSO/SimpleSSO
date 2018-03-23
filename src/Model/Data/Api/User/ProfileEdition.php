@@ -2,9 +2,10 @@
 
 namespace App\Model\Data\Api\User;
 
+use App\Model\Data\Generic\BaseProfileEdition;
 use Symfony\Component\Validator\Constraints;
 
-class ProfileEdition
+class ProfileEdition extends BaseProfileEdition
 {
     /**
      * @var string

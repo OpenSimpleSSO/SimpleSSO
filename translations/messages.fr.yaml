@@ -49,6 +49,17 @@ userProfile:
         emailAddressVerified: "Adresse e-mail vérifiée"
         emailAddressUnverified: "Adresse e-mail non vérifiée"
         sendVerificationEmail: "Renvoyer un e-mail de vérification"
+        edit: "Modifier le profil"
+
+    edit:
+        title: "Modification de votre profil utilisateur"
+        firstName: "Votre prénom"
+        lastName: "Votre nom"
+        emailAddress: "Votre adresse e-mail"
+        organization: "Votre entreprise"
+        submit: "Enregistrer les modifications"
+        back: "Annuler les modifications"
+        success: "Votre profil utilisateur a été mis à jour."
 
     sendVerificationEmail:
         success: "Un e-mail vous a été envoyé sur votre adresse %emailAddress%. Veuillez consulter votre boîte de réception et cliquer sur le lien présent à l’intérieur de celui-ci. Si vous ne trouvez pas l’e-mail, pensez à vérifier vos courriers indésirables."

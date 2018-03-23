@@ -120,16 +120,16 @@ class UserController extends Controller
         if (!$userAccount) {
             throw new NotFoundHttpException('User account not found.');
         }
+        $initialEmailAddress = $userAccount->emailAddress;
 
         /** @var ProfileEdition $data */
         $data = $jsonRequestModel->handleRequest($request, ProfileEdition::class);
         /** @var ConstraintViolationListInterface $errors */
         if ($jsonRequestModel->isValid($data, $errors)) {
             try {
-                $emailAddressChanged = $data->emailAddress !== $userAccount->emailAddress;
                 $model->editProfile($userAccount, $data);
                 $this->saveDatabase();
-                if ($emailAddressChanged) {
+                if ($userAccount->emailAddress !== $initialEmailAddress) {
                     $emailModel->sendEmailAddressVerificationEmail($userAccount);
                 }
 

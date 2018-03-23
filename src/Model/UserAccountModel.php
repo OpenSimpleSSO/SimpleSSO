@@ -4,8 +4,10 @@ namespace App\Model;
 
 use App\Entity\UserAccount;
 use App\Model\Data\Api\User\PasswordChange;
-use App\Model\Data\Api\User\ProfileEdition;
+use App\Model\Data\Api\User\ProfileEdition as ApiProfileEdition;
+use App\Model\Data\Generic\BaseProfileEdition;
 use App\Model\Data\Generic\BaseRegistration;
+use App\Model\Data\UserManagement\ProfileEdition;
 use App\Repository\UserAccountRepository;
 use Ramsey\Uuid\Uuid;
 use SimpleSSO\CommonBundle\Model\TokenModel;
@@ -78,16 +80,33 @@ class UserAccountModel
     }
 
     /**
-     * @param UserAccount    $userAccount
-     * @param ProfileEdition $data
+     * @param UserAccount $userAccount
+     * @return ProfileEdition
      */
-    public function editProfile(UserAccount $userAccount, ProfileEdition $data): void
+    public function generateProfileEditionData(UserAccount $userAccount): ProfileEdition
+    {
+        $data = new ProfileEdition();
+        $data->firstName = $userAccount->firstName;
+        $data->lastName = $userAccount->lastName;
+        $data->emailAddress = $userAccount->emailAddress;
+        $data->organization = $userAccount->organization;
+
+        return $data;
+    }
+
+    /**
+     * @param UserAccount        $userAccount
+     * @param BaseProfileEdition $data
+     */
+    public function editProfile(UserAccount $userAccount, BaseProfileEdition $data): void
     {
         $this->updateEmailAddress($userAccount, $data->emailAddress);
         $userAccount->organization = $data->organization;
         $userAccount->firstName = $data->firstName;
         $userAccount->lastName = $data->lastName;
-        $userAccount->roles = $data->roles;
+        if ($data instanceof ApiProfileEdition) {
+            $userAccount->roles = $data->roles;
+        }
     }
 
     /**
