@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>{{ 'title'|tra('userAccountAttribute') }}</th>
+                <th>{{ 'key'|tra('userAccountAttribute') }}</th>
+                <th>{{ 'type'|tra('userAccountAttribute') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="auto-attribute">
+                <td>{{ 'id'|tra('userAccount') }}</td>
+                <td><code>id</code></td>
+                <td>{{ 'typeValue.text'|tra('userAccountAttribute') }}</td>
+                <td></td>
+            </tr>
+            <tr class="auto-attribute">
+                <td>{{ 'organization'|tra('userAccount') }}</td>
+                <td><code>organization</code></td>
+                <td>{{ 'typeValue.text'|tra('userAccountAttribute') }}</td>
+                <td></td>
+            </tr>
+            <tr class="auto-attribute">
+                <td>{{ 'firstName'|tra('userAccount') }}</td>
+                <td><code>firstName</code></td>
+                <td>{{ 'typeValue.text'|tra('userAccountAttribute') }}</td>
+                <td></td>
+            </tr>
+            <tr class="auto-attribute">
+                <td>{{ 'lastName'|tra('userAccount') }}</td>
+                <td><code>lastName</code></td>
+                <td>{{ 'typeValue.text'|tra('userAccountAttribute') }}</td>
+                <td></td>
+            </tr>
+            <tr class="auto-attribute">
+                <td>{{ 'emailAddress'|tra('userAccount') }}</td>
+                <td><code>emailAddress</code></td>
+                <td>{{ 'typeValue.text'|tra('userAccountAttribute') }}</td>
+                <td></td>
+            </tr>
+            {% for attribute in attributes %}
+                <tr>
+                    <td>{{ attribute.title }}</td>
+                    <td><code>{{ attribute.key }}</code></td>
+                    <td>{{ ('typeValue.' ~ attribute.type)|tra('userAccountAttribute') }}</td>
+                    <td><a href="{{ path('admin.userAccountAttribute.edit', { attributeId: attribute.id }) }}"><span class="fa fa-pencil"></span> {{ 'edit'|tr }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p><a href="{{ path('admin.userAccountAttribute.create') }}" class="btn btn-primary"><span class="fa fa-plus"></span> {{ 'add'|tr }}</a></p>
+{% endblock %}
+
+
+
+{% block stylesheets %}
+    <style>
+        .auto-attribute {
+            background-color: #eee;
+            cursor: not-allowed;
+        }
+    </style>
+{% endblock %}

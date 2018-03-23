@@ -30,7 +30,20 @@
         </tbody>
     </table>
 
-    <p><a href="{{ path('userProfile.edit') }}">{{ 'edit'|tr }}</a></p>
+    <p>
+        <a href="{{ path('userProfile.edit') }}" class="btn btn-primary"><span class="fa fa-pencil"></span> {{ 'edit'|tr }}</a>
+        <a href="{{ path('userManagement.logout') }}" class="btn btn-primary"><span class="fa fa-sign-out"></span> {{ 'logout'|tr }}</a>
+    </p>
+
+    {% if is_granted('ROLE_SIMPLESSO_ADMIN') %}
+        <div class="alert alert-danger">
+            <h2>{{ 'admin.title'|tr }}</h2>
+
+            <ul>
+                <li><a href="{{ path('admin.userAccountAttribute.list') }}">{{ 'admin.userAccountAttributes'|tr }}</a></li>
+            </ul>
+        </div>
+    {% endif %}
 {% endblock %}
 
 

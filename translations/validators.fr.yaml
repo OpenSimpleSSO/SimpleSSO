@@ -1,4 +1,21 @@
 
+admin:
+    userAccountAttribute:
+        createEditUserAccountAttribute:
+            title:
+                notBlank: "La description est obligatoire."
+                minLength: "La description doit faire au moins {{ limit }} caractères"
+                maxLength: "La description ne peut pas dépasser {{ limit }} caractères"
+            key:
+                notBlank: "La clé est obligatoire."
+                minLength: "La clé doit faire au moins {{ limit }} caractères"
+                maxLength: "La clé ne peut pas dépasser {{ limit }} caractères"
+            type:
+                notBlank: "Le type est obligatoire."
+                choice: "Le type est invalide. Veuillez choisir une valeur parmi celle proposées."
+
+
+
 userManagement:
     registration:
         firstName:

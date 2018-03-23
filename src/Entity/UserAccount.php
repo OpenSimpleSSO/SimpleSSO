@@ -101,6 +101,13 @@ class UserAccount implements UserInterface
     public $tokenExpirationDate;
 
     /**
+     * @var array
+     *
+     * @Mapping\Column(type="json", options={"jsonb": true})
+     */
+    public $extraData;
+
+    /**
      * UserAccount constructor.
      *
      * @param string $emailAddress
