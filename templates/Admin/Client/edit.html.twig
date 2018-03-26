@@ -1,0 +1,4 @@
+{% extends 'Admin/Client/create.html.twig' %}
+
+{% block title %}{% if client is defined %}{{ pageTitle({ client: client.title }) }}{% else %}{{ pageTitle() }}{% endif %}{% endblock %}
+{% block pageTitle %}{% if client is defined %}{{ pageTitle({ client: client.title }) }}{% else %}{{ pageTitle() }}{% endif %}{% endblock %}

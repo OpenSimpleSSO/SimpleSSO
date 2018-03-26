@@ -16,6 +16,33 @@ class ClientRepository extends Repository
     }
 
     /**
+     * @param Client $client
+     */
+    public function save(Client $client)
+    {
+        $this->entityManager->persist($client);
+    }
+
+    /**
+     * @param Client $client
+     */
+    public function remove(Client $client)
+    {
+        $this->entityManager->remove($client);
+    }
+
+    /**
+     * @return Client[]
+     */
+    public function findAll(): array
+    {
+        return $this
+            ->createQueryBuilder('c')
+            ->orderBy('c.title', 'ASC')
+            ->getQuery()->getResult();
+    }
+
+    /**
      * @param string $clientId
      * @return Client|null
      */

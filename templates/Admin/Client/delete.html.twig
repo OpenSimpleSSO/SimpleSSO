@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ pageTitle({ client: client.title }) }}{% endblock %}
+{% block pageTitle %}{{ pageTitle({ client: client.title }) }}{% endblock %}
+
+
+
+{% block body %}
+    <div class="alert alert-danger">
+        <p>{{ 'message'|tr }}</p>
+    </div>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <div class="form-group">
+            <button class="btn btn-danger">{{ 'submit'|tr }}</button>
+            <a href="{{ path('admin.client.list') }}" class="btn btn-secondary">{{ 'cancel'|tr }}</a>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}

@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Vinorcola\HelperBundle\Controller;
 
 /**
- * @Route("/admin/user-account-attributes", name="admin.userAccountAttribute.")
+ * @Route("/admin/user-account-attribute", name="admin.userAccountAttribute.")
  */
 class UserAccountAttributeController extends Controller
 {
