@@ -1,5 +1,11 @@
 
 attribute:
+    client:
+        id: "Identifiant unique"
+        title: "Client"
+        publicKey: "Clé public"
+        redirectUrl: "URL de redirection"
+
     userAccount:
         id: "Identifiant unique"
         firstName: "Prénom"
@@ -7,6 +13,7 @@ attribute:
         displayName: "Nom"
         emailAddress: "Adresse e-mail"
         password: "Mot de passe"
+
     userAccountAttribute:
         title: "Description"
         key: "Clé"
@@ -21,6 +28,31 @@ attribute:
 
 
 admin:
+    client:
+        list:
+            title: "Liste des clients"
+            noClients: "Aucun client pour le moment."
+            add: "Ajouter un client"
+            edit: "Modifier"
+            delete: "Révoquer"
+
+        create:
+            title: "Ajout d’un nouveau client"
+            submit: "Ajouter le client"
+            cancel: "Annuler l’ajout"
+
+        edit:
+            title: "Modification du client %client%"
+            submit: "Enregistrer les modifications"
+            cancel: "Annuler les modifications"
+
+        delete:
+            title: "Révoquer le client %client%"
+            message: "Toutes les informations du client seront supprimées et définitivement perdu."
+            submit: "Révoquer le client"
+            cancel: "Annuler"
+
+
     userAccountAttribute:
         list:
             title: "Liste des attributs des comptes utilisateurs"
@@ -83,6 +115,7 @@ userProfile:
         logout: "Se déconnecter"
         admin:
             title: "Administration"
+            clients: "Les clients"
             userAccountAttributes: "Les attributs des comptes utilisateurs"
 
     edit:
