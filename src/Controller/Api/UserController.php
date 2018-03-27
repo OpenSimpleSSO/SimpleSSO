@@ -60,17 +60,19 @@ class UserController extends Controller
      * @Method("POST")
      * @Security("is_granted('ROLE_CLIENT')")
      *
-     * @param Request          $request
-     * @param JsonRequestModel $jsonRequestModel
-     * @param UserAccountModel $model
-     * @param EmailModel       $emailModel
+     * @param Request                   $request
+     * @param JsonRequestModel          $jsonRequestModel
+     * @param UserAccountModel          $model
+     * @param EmailModel                $emailModel
+     * @param UserAccountAttributeModel $attributeModel
      * @return Response
      */
     public function register(
         Request $request,
         JsonRequestModel $jsonRequestModel,
         UserAccountModel $model,
-        EmailModel $emailModel
+        EmailModel $emailModel,
+        UserAccountAttributeModel $attributeModel
     ): Response {
 
         $data = $jsonRequestModel->handleRequest($request, Registration::class);
@@ -81,9 +83,7 @@ class UserController extends Controller
                 $this->saveDatabase();
                 $emailModel->sendRegistrationEmail($userAccount);
 
-                return new Response([
-                    'id' => $userAccount->getId(),
-                ], null, 201);
+                return $this->generateProfileResponse($userAccount, $attributeModel->get(), 201);
             } catch (UniqueConstraintViolationException $exception) {
                 $errors->add(new ConstraintViolation(
                     'Email address already used.',
@@ -262,11 +262,12 @@ class UserController extends Controller
     /**
      * Generate a response containing the user account's profile.
      *
-     * @param UserAccountAttribute[] $attributes
      * @param UserAccount            $userAccount
+     * @param UserAccountAttribute[] $attributes
+     * @param int                    $status
      * @return Response
      */
-    private function generateProfileResponse(UserAccount $userAccount, array $attributes): Response
+    private function generateProfileResponse(UserAccount $userAccount, array $attributes, int $status = 200): Response
     {
         $data = [
             'id'                   => $userAccount->getId(),
@@ -281,6 +282,6 @@ class UserController extends Controller
             $data[$attribute->key] = $userAccount->getAttribute($attribute->key);
         }
 
-        return new Response($data);
+        return new Response($data, null, $status);
     }
 }
