@@ -9,10 +9,10 @@ class CreateEditUserAccountAttribute
     /**
      * @var string
      *
-     * @Constraints\NotBlank(message="admin.userAccountAttribute.createEditUserAccountAttribute.title.notBlank")
+     * @Constraints\NotBlank(message="userAccountAttribute.title.notBlank")
      * @Constraints\Length(
-     *     min=2, minMessage="admin.userAccountAttribute.createEditUserAccountAttribute.title.minLength",
-     *     max=80, maxMessage="admin.userAccountAttribute.createEditUserAccountAttribute.title.maxLength",
+     *     min=2, minMessage="userAccountAttribute.title.minLength",
+     *     max=80, maxMessage="userAccountAttribute.title.maxLength",
      * )
      */
     public $title;
@@ -20,19 +20,26 @@ class CreateEditUserAccountAttribute
     /**
      * @var string
      *
-     * @Constraints\NotBlank(message="admin.userAccountAttribute.createEditUserAccountAttribute.key.notBlank")
+     * @Constraints\NotBlank(message="userAccountAttribute.key.notBlank")
      * @Constraints\Length(
-     *     min=2, minMessage="admin.userAccountAttribute.createEditUserAccountAttribute.key.minLength",
-     *     max=80, maxMessage="admin.userAccountAttribute.createEditUserAccountAttribute.key.maxLength",
+     *     min=2, minMessage="userAccountAttribute.key.minLength",
+     *     max=80, maxMessage="userAccountAttribute.key.maxLength",
      * )
+     * @Constraints\NotIdenticalTo(value="id", message="userAccountAttribute.key.alreadyUsed")
+     * @Constraints\NotIdenticalTo(value="emailAddress", message="userAccountAttribute.key.alreadyUsed")
+     * @Constraints\NotIdenticalTo(value="emailAddressVerified", message="userAccountAttribute.key.alreadyUsed")
+     * @Constraints\NotIdenticalTo(value="firstName", message="userAccountAttribute.key.alreadyUsed")
+     * @Constraints\NotIdenticalTo(value="lastName", message="userAccountAttribute.key.alreadyUsed")
+     * @Constraints\NotIdenticalTo(value="roles", message="userAccountAttribute.key.alreadyUsed")
+     * @Constraints\NotIdenticalTo(value="enabled", message="userAccountAttribute.key.alreadyUsed")
      */
     public $key;
 
     /**
      * @var string
      *
-     * @Constraints\NotBlank(message="admin.userAccountAttribute.createEditUserAccountAttribute.type.notBlank")
-     * @Constraints\Choice(choices={"bool", "date", "datetime", "number", "text"}, message="admin.userAccountAttribute.createEditUserAccountAttribute.type.choice")
+     * @Constraints\NotBlank(message="userAccountAttribute.type.notBlank")
+     * @Constraints\Choice(choices={"bool", "date", "datetime", "number", "text"}, message="userAccountAttribute.type.choice")
      */
     public $type;
 }

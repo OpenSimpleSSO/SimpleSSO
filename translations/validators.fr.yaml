@@ -1,40 +1,62 @@
 
-admin:
-    userAccountAttribute:
-        createEditUserAccountAttribute:
-            title:
-                notBlank: "La description est obligatoire."
-                minLength: "La description doit faire au moins {{ limit }} caractères"
-                maxLength: "La description ne peut pas dépasser {{ limit }} caractères"
-            key:
-                notBlank: "La clé est obligatoire."
-                minLength: "La clé doit faire au moins {{ limit }} caractères"
-                maxLength: "La clé ne peut pas dépasser {{ limit }} caractères"
-            type:
-                notBlank: "Le type est obligatoire."
-                choice: "Le type est invalide. Veuillez choisir une valeur parmi celle proposées."
+client:
+    title:
+        notBlank: "Le nom du client est obligatoire."
+        minLength: "Le nom du client doit faire au moins {{ limit }} caractères."
+        maxLength: "Le nom du client ne peut pas dépasser {{ limit }} caractères."
+
+    publicKey:
+        notBlank: "La clé publique est obligatoire."
+        invalidKey: "Clé publique invalide."
+
+    redirectUrl:
+        notBlank: "L’url de retour est obligatoire."
+        url: "L’url est invalide."
 
 
 
-userManagement:
-    registration:
-        firstName:
-            notBlank: "Le prénom est obligatoire."
-            minLength: "Le prénom doit faire au moins {{ limit }} caractères."
-            maxLength: "Le prénom ne peut pas dépasser {{ limit }} caractères."
-        lastName:
-            notBlank: "Le nom est obligatoire."
-            minLength: "Le nom doit faire au moins {{ limit }} caractères."
-            maxLength: "Le nom ne peut pas dépasser {{ limit }} caractères."
-        emailAddress:
-            notBlank: "L’adresse e-mail est obligatoire."
-            email: "L’adresse e-mail est incorrecte."
-            alreadyUsed: "Cette adresse e-mail est déjà utilisée. Si vous avez oublié votre mot de passe, vous pouvez utiliser la fonctionnalité \"mot de passe oublié\" depuis la page de connexion."
-        password:
-            notBlank: "Le mot de passe est obligatoire."
-            minLength: "Le mot de passe doit faire au moins {{ limit }} caractères."
-            maxLength: "Le mot de passe ne peut pas dépasser {{ limit }} caractères."
-            lowerCase: "Le mot de passe doit contenir au moins une lettre minuscule."
-            upperCase: "Le mot de passe doit contenir au moins une lettre majuscule."
-            digit: "Le mot de passe doit contenir au moins un chiffre."
-            repeat: "Les deux mots de passe ne correspondent pas. Merci de recommencer."
+userAccount:
+    firstName:
+        notBlank: "Le prénom est obligatoire."
+        minLength: "Le prénom doit faire au moins {{ limit }} caractères."
+        maxLength: "Le prénom ne peut pas dépasser {{ limit }} caractères."
+
+    lastName:
+        notBlank: "Le nom est obligatoire."
+        minLength: "Le nom doit faire au moins {{ limit }} caractères."
+        maxLength: "Le nom ne peut pas dépasser {{ limit }} caractères."
+
+    emailAddress:
+        notBlank: "L’adresse e-mail est obligatoire."
+        email: "L’adresse e-mail est incorrecte."
+        alreadyUsed: "Cette adresse e-mail est déjà utilisée. Si vous avez oublié votre mot de passe, vous pouvez utiliser la fonctionnalité \"mot de passe oublié\" depuis la page de connexion."
+
+    password:
+        notBlank: "Le mot de passe est obligatoire."
+        minLength: "Le mot de passe doit faire au moins {{ limit }} caractères."
+        maxLength: "Le mot de passe ne peut pas dépasser {{ limit }} caractères."
+        lowerCase: "Le mot de passe doit contenir au moins une lettre minuscule."
+        upperCase: "Le mot de passe doit contenir au moins une lettre majuscule."
+        digit: "Le mot de passe doit contenir au moins un chiffre."
+        repeat: "Les deux mots de passe ne correspondent pas. Merci de recommencer."
+
+    roles:
+        minLength: "Les rôles doivent faire au moins {{ limit }} caractères."
+
+
+
+userAccountAttribute:
+    title:
+        notBlank: "La description est obligatoire."
+        minLength: "La description doit faire au moins {{ limit }} caractères"
+        maxLength: "La description ne peut pas dépasser {{ limit }} caractères"
+
+    key:
+        notBlank: "La clé est obligatoire."
+        minLength: "La clé doit faire au moins {{ limit }} caractères"
+        maxLength: "La clé ne peut pas dépasser {{ limit }} caractères"
+        alreadyUsed: "Cette clé est déjà utilisée."
+
+    type:
+        notBlank: "Le type est obligatoire."
+        choice: "Le type est invalide. Veuillez choisir une valeur parmi celles proposées."

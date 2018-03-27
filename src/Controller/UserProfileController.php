@@ -74,7 +74,7 @@ class UserProfileController extends Controller
             } catch (UniqueConstraintViolationException $exception) {
                 // Revert email address to avoid security token change, and so user logout.
                 $userAccount->emailAddress = $initialEmailAddress;
-                $this->addFormError($form['emailAddress'], 'userManagement.registration.emailAddress.alreadyUsed');
+                $this->addFormError($form['emailAddress'], 'userAccount.emailAddress.alreadyUsed');
             }
         }
 

@@ -10,10 +10,10 @@ class CreateEditClient
     /**
      * @var string
      *
-     * @Constraints\NotBlank(message="admin.client.createEditClient.title.notBlank")
+     * @Constraints\NotBlank(message="client.title.notBlank")
      * @Constraints\Length(
-     *     min=2, minMessage="admin.client.createEditClient.title.minLength",
-     *     max=80, maxMessage="admin.client.createEditClient.title.maxLength",
+     *     min=2, minMessage="client.title.minLength",
+     *     max=80, maxMessage="client.title.maxLength",
      * )
      */
     public $title;
@@ -21,15 +21,15 @@ class CreateEditClient
     /**
      * @var string
      *
-     * @Constraints\NotBlank(message="admin.client.createEditClient.publicKey.notBlank")
+     * @Constraints\NotBlank(message="client.publicKey.notBlank")
      */
     public $publicKey;
 
     /**
      * @var string
      *
-     * @Constraints\NotBlank(message="admin.client.createEditClient.redirectUrl.notBlank")
-     * @Constraints\Url(message="admin.client.createEditClient.redirectUrl.url")
+     * @Constraints\NotBlank(message="client.redirectUrl.notBlank")
+     * @Constraints\Url(message="client.redirectUrl.url")
      */
     public $redirectUrl;
 
@@ -42,7 +42,7 @@ class CreateEditClient
     {
         if (openssl_pkey_get_public($this->publicKey) === false) {
             $context
-                ->buildViolation('admin.client.createEditClient.publicKey.invalidKey')
+                ->buildViolation('client.publicKey.invalidKey')
                 ->atPath('publicKey')
                 ->addViolation();
         }

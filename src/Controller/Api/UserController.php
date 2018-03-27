@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Vinorcola\ApiServerTools\Response;
@@ -65,6 +66,7 @@ class UserController extends Controller
      * @param UserAccountModel          $model
      * @param EmailModel                $emailModel
      * @param UserAccountAttributeModel $attributeModel
+     * @param TranslatorInterface       $translator
      * @return Response
      */
     public function register(
@@ -72,7 +74,8 @@ class UserController extends Controller
         JsonRequestModel $jsonRequestModel,
         UserAccountModel $model,
         EmailModel $emailModel,
-        UserAccountAttributeModel $attributeModel
+        UserAccountAttributeModel $attributeModel,
+        TranslatorInterface $translator
     ): Response {
 
         $data = $jsonRequestModel->handleRequest($request, Registration::class);
@@ -86,8 +89,8 @@ class UserController extends Controller
                 return $this->generateProfileResponse($userAccount, $attributeModel->get(), 201);
             } catch (UniqueConstraintViolationException $exception) {
                 $errors->add(new ConstraintViolation(
-                    'Email address already used.',
-                    null,
+                    $translator->trans('userAccount.emailAddress.alreadyUsed', [], 'validators', 'en'),
+                    'userAccount.emailAddress.alreadyUsed',
                     [],
                     $data->emailAddress,
                     'emailAddress',
@@ -113,6 +116,7 @@ class UserController extends Controller
      * @param JsonRequestModel          $jsonRequestModel
      * @param UserAccountModel          $model
      * @param EmailModel                $emailModel
+     * @param TranslatorInterface       $translator
      * @return Response
      */
     public function editProfile(
@@ -122,7 +126,8 @@ class UserController extends Controller
         UserAccountAttributeModel $attributeModel,
         JsonRequestModel $jsonRequestModel,
         UserAccountModel $model,
-        EmailModel $emailModel
+        EmailModel $emailModel,
+        TranslatorInterface $translator
     ): Response {
 
         $userAccount = $repository->find($userAccountId);
@@ -145,8 +150,8 @@ class UserController extends Controller
                 return $this->generateProfileResponse($userAccount, $attributeModel->get());
             } catch (UniqueConstraintViolationException $exception) {
                 $errors->add(new ConstraintViolation(
-                    'Email address already used.',
-                    null,
+                    $translator->trans('userAccount.emailAddress.alreadyUsed', [], 'validators', 'en'),
+                    'userAccount.emailAddress.alreadyUsed',
                     [],
                     $data->emailAddress,
                     'emailAddress',

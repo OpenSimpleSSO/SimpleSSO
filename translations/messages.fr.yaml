@@ -2,9 +2,9 @@
 attribute:
     client:
         id: "Identifiant unique"
-        title: "Client"
+        title: "Nom du client"
         publicKey: "Clé public"
-        redirectUrl: "URL de redirection"
+        redirectUrl: "URL de retour"
 
     userAccount:
         id: "Identifiant unique"
@@ -12,13 +12,17 @@ attribute:
         lastName: "Nom"
         displayName: "Nom"
         emailAddress: "Adresse e-mail"
+        emailAddressVerified: "L’adresse e-mail est vérifiée"
         password: "Mot de passe"
+        roles: "Rôles"
+        enabled: "L’utilisateur est activé"
 
     userAccountAttribute:
         title: "Description"
         key: "Clé"
         type: "Type de valeur"
         typeValue:
+            array: "Liste"
             bool: "Booléen"
             date: "Date"
             datetime: "Date & Heure"

@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Form\Admin\UserAccountAttribute\CreateEditUserAccountAttributeType;
 use App\Model\UserAccountAttributeModel;
 use App\Repository\UserAccountAttributeRepository;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,10 +47,14 @@ class UserAccountAttributeController extends Controller
         $form = $this->createForm(CreateEditUserAccountAttributeType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $model->create($form->getData());
-            $this->saveDatabase();
+            try {
+                $model->create($form->getData());
+                $this->saveDatabase();
 
-            return $this->redirectToRoute('admin.userAccountAttribute.list');
+                return $this->redirectToRoute('admin.userAccountAttribute.list');
+            } catch (UniqueConstraintViolationException $exception) {
+                $this->addFormError($form['key'], 'userAccountAttribute.key.alreadyUsed');
+            }
         }
 
         return $this->render('Admin/UserAccountAttribute/createEdit.html.twig', [
@@ -84,10 +89,14 @@ class UserAccountAttributeController extends Controller
         $form = $this->createForm(CreateEditUserAccountAttributeType::class, $model->generateEditionData($attribute));
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $model->edit($attribute, $form->getData());
-            $this->saveDatabase();
+            try {
+                $model->edit($attribute, $form->getData());
+                $this->saveDatabase();
 
-            return $this->redirectToRoute('admin.userAccountAttribute.list');
+                return $this->redirectToRoute('admin.userAccountAttribute.list');
+            } catch (UniqueConstraintViolationException $exception) {
+                $this->addFormError($form['key'], 'userAccountAttribute.key.alreadyUsed');
+            }
         }
 
         return $this->render('Admin/UserAccountAttribute/createEdit.html.twig', [

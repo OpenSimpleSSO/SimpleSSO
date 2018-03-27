@@ -227,7 +227,7 @@ class UserAccountModel
     {
         $userAccount->extraData = [];
         foreach ($this->attributeModel->get() as $attribute) {
-            $value = $extraData[$attribute->key];
+            $value = $extraData[$attribute->key] ?? null;
             if ($value === null) {
                 $userAccount->extraData[$attribute->key] = null;
             } else {

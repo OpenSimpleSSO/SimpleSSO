@@ -112,7 +112,7 @@ class UserManagementController extends Controller
 
                 return $this->redirectToRoute('userProfile.show');
             } catch (UniqueConstraintViolationException $exception) {
-                $this->addFormError($form['emailAddress'], 'userManagement.registration.emailAddress.alreadyUsed');
+                $this->addFormError($form['emailAddress'], 'userAccount.emailAddress.alreadyUsed');
             }
         }
 

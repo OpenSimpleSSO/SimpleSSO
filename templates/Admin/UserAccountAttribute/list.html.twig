@@ -20,6 +20,18 @@
                 <td></td>
             </tr>
             <tr class="auto-attribute">
+                <td>{{ 'emailAddress'|tra('userAccount') }}</td>
+                <td><code>emailAddress</code></td>
+                <td>{{ 'typeValue.text'|tra('userAccountAttribute') }}</td>
+                <td></td>
+            </tr>
+            <tr class="auto-attribute">
+                <td>{{ 'emailAddressVerified'|tra('userAccount') }}</td>
+                <td><code>emailAddressVerified</code></td>
+                <td>{{ 'typeValue.bool'|tra('userAccountAttribute') }}</td>
+                <td></td>
+            </tr>
+            <tr class="auto-attribute">
                 <td>{{ 'firstName'|tra('userAccount') }}</td>
                 <td><code>firstName</code></td>
                 <td>{{ 'typeValue.text'|tra('userAccountAttribute') }}</td>
@@ -32,9 +44,15 @@
                 <td></td>
             </tr>
             <tr class="auto-attribute">
-                <td>{{ 'emailAddress'|tra('userAccount') }}</td>
-                <td><code>emailAddress</code></td>
-                <td>{{ 'typeValue.text'|tra('userAccountAttribute') }}</td>
+                <td>{{ 'roles'|tra('userAccount') }}</td>
+                <td><code>roles</code></td>
+                <td>{{ 'typeValue.array'|tra('userAccountAttribute') }}</td>
+                <td></td>
+            </tr>
+            <tr class="auto-attribute">
+                <td>{{ 'enabled'|tra('userAccount') }}</td>
+                <td><code>enabled</code></td>
+                <td>{{ 'typeValue.bool'|tra('userAccountAttribute') }}</td>
                 <td></td>
             </tr>
             {% for attribute in attributes %}
