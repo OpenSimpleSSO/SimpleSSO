@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ pageTitle({ userAccount: userAccount.displayName }) }}{% endblock %}
+{% block pageTitle %}{{ pageTitle({ userAccount: userAccount.displayName }) }}{% endblock %}
+
+
+
+{% block body %}
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'displayName'|tra('userAccount') }}</th>
+                <td>{{ userAccount.displayName }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'emailAddress'|tra('userAccount') }}</th>
+                <td>
+                    {{- userAccount.emailAddress }}
+                    <span class="email-address-status {{ userAccount.emailAddressVerified ? 'text-success' : 'text-danger' }}">(
+                        {%- if userAccount.emailAddressVerified -%}
+                            <span class="fa fa-check"></span> {{ 'emailAddressVerified'|tr }}
+                        {%- else -%}
+                            <span class="fa fa-remove"></span> {{ 'emailAddressUnverified'|tr }}.
+                            <a href="{{ path('admin.userAccount.sendVerificationEmail', { userAccountId: userAccount.id }) }}">{{ 'sendVerificationEmail'|tr }}</a>
+                        {%- endif -%}
+                        )</span>
+                </td>
+            </tr>
+            {% for attribute in attributes %}
+                <tr>
+                    <th>{{ attribute.title }}</th>
+                    <td>
+                        {%- if userAccount.getAttribute(attribute.key) is not none -%}
+                            {%- if attribute.type == constant('TYPE_BOOL', attribute) -%}
+                                {%- if userAccount.getAttribute(attribute.key) -%}
+                                    <span class="text-success fa fa-check"></span> {{ 'yes'|tr }}
+                                {%- else -%}
+                                    <span class="text-danger fa fa-remove"></span> {{ 'no'|tr }}
+                                {%- endif -%}
+                            {%- elseif attribute.type == constant('TYPE_DATE', attribute) -%}
+                                {{ userAccount.getAttribute(attribute.key)|localizeddate('long', 'none') }}
+                            {%- elseif attribute.type == constant('TYPE_DATETIME', attribute) -%}
+                                {{ userAccount.getAttribute(attribute.key)|localizeddate('long', 'medium') }}
+                            {%- else -%}
+                                {{ userAccount.getAttribute(attribute.key) }}
+                            {%- endif -%}
+                        {%- endif -%}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>
+        <a href="{{ path('userProfile.edit') }}" class="btn btn-primary"><span class="fa fa-pencil"></span> {{ 'edit'|tr }}</a>
+        <a href="{{ path('admin.userAccount.list') }}" class="btn btn-secondary">{{ 'back'|tr }}</a>
+    </p>
+{% endblock %}
+
+
+
+{% block stylesheets %}
+    <style>
+        .email-address-status {
+            font-style: italic;
+            font-size: 0.8em;
+        }
+    </style>
+{% endblock %}

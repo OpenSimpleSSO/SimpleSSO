@@ -61,10 +61,23 @@ admin:
     userAccount:
         list:
             title: "Liste des comptes utilisateurs"
-            back: "Retour"
             emailAddressVerified: "Adresse e-mail vérifiée"
             emailAddressUnverified: "Adresse e-mail non vérifiée"
             showProfile: "Voir le profil"
+            back: "Retour"
+
+        profile:
+            title: "Profil utilisateur de %userAccount%"
+            emailAddressVerified: "Adresse e-mail vérifiée"
+            emailAddressUnverified: "Adresse e-mail non vérifiée"
+            sendVerificationEmail: "Renvoyer un e-mail de vérification"
+            yes: "Oui"
+            no: "Non"
+            edit: "Modifier le profil"
+            back: "Retour"
+
+        sendVerificationEmail:
+            success: "Un e-mail a été envoyé à l’adresse %emailAddress%. La personne doit consulter sa boîte de réception et cliquer sur le lien présent à l’intérieur de celui-ci. Si elle ne trouve pas l’e-mail, elle doit penser à vérifier ses courriers indésirables."
 
 
     userAccountAttribute:
@@ -123,9 +136,9 @@ userProfile:
         title: "Votre profil utilisateur"
         emailAddressVerified: "Adresse e-mail vérifiée"
         emailAddressUnverified: "Adresse e-mail non vérifiée"
+        sendVerificationEmail: "Renvoyer un e-mail de vérification"
         yes: "Oui"
         no: "Non"
-        sendVerificationEmail: "Renvoyer un e-mail de vérification"
         edit: "Modifier le profil"
         logout: "Se déconnecter"
         admin:

@@ -26,7 +26,7 @@
                         )</span>
                     </td>
                     <td>
-                        <a href="#">{{ 'showProfile'|tr }}</a>
+                        <a href="{{ path('admin.userAccount.profile', { userAccountId: userAccount.id }) }}">{{ 'showProfile'|tr }}</a>
                     </td>
                 </tr>
             {% endfor %}
