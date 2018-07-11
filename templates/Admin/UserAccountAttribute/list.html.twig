@@ -66,7 +66,10 @@
         </tbody>
     </table>
 
-    <p><a href="{{ path('admin.userAccountAttribute.create') }}" class="btn btn-primary"><span class="fa fa-plus"></span> {{ 'add'|tr }}</a></p>
+    <p>
+        <a href="{{ path('admin.userAccountAttribute.create') }}" class="btn btn-primary"><span class="fa fa-plus"></span> {{ 'add'|tr }}</a>
+        <a href="{{ path('main.home') }}" class="btn btn-secondary">{{ 'back'|tr }}</a>
+    </p>
 {% endblock %}
 
 
