@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>{{ 'displayName'|tra('userAccount') }}</th>
+                <th>{{ 'emailAddress'|tra('userAccount') }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for userAccount in userAccounts %}
+                <tr>
+                    <td>{{ userAccount.displayName }}</td>
+                    <td>
+                        {{- userAccount.emailAddress }}
+                        <span class="email-address-status {{ userAccount.emailAddressVerified ? 'text-success' : 'text-danger' }}">(
+                            {%- if userAccount.emailAddressVerified -%}
+                                <span class="fa fa-check"></span> {{ 'emailAddressVerified'|tr }}
+                            {%- else -%}
+                                <span class="fa fa-remove"></span> {{ 'emailAddressUnverified'|tr }}
+                            {%- endif -%}
+                        )</span>
+                    </td>
+                    <td>
+                        <a href="#">{{ 'showProfile'|tr }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>
+        <a href="{{ path('main.home') }}" class="btn btn-secondary">{{ 'back'|tr }}</a>
+    </p>
+{% endblock %}
+
+
+
+{% block stylesheets %}
+    <style>
+        .email-address-status {
+            font-style: italic;
+            font-size: 0.8em;
+        }
+    </style>
+{% endblock %}

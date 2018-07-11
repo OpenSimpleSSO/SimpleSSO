@@ -25,6 +25,18 @@ class UserAccountRepository extends Repository
     }
 
     /**
+     * @return UserAccount[]
+     */
+    public function findAll(): array
+    {
+        return $this
+            ->createQueryBuilder('ua')
+            ->orderBy('ua.firstName', 'ASC')
+            ->addOrderBy('ua.lastName', 'ASC')
+            ->getQuery()->getResult();
+    }
+
+    /**
      * @param string $userAccountId
      * @return UserAccount|null
      */

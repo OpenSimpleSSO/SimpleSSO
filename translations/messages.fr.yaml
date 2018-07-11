@@ -58,6 +58,15 @@ admin:
             cancel: "Annuler"
 
 
+    userAccount:
+        list:
+            title: "Liste des comptes utilisateurs"
+            back: "Retour"
+            emailAddressVerified: "Adresse e-mail vérifiée"
+            emailAddressUnverified: "Adresse e-mail non vérifiée"
+            showProfile: "Voir le profil"
+
+
     userAccountAttribute:
         list:
             title: "Liste des attributs des comptes utilisateurs"
@@ -121,6 +130,7 @@ userProfile:
         logout: "Se déconnecter"
         admin:
             title: "Administration"
+            accounts: "Les comptes utilisateurs"
             clients: "Les clients"
             userAccountAttributes: "Les attributs des comptes utilisateurs"
 
