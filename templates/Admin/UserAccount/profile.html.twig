@@ -26,6 +26,25 @@
                         )</span>
                 </td>
             </tr>
+            <tr>
+                <th>{{ 'roles'|tra('userAccount') }}</th>
+                <td>
+                    {%- for role in userAccount.roles -%}
+                        {%- if not loop.first %}, {% endif -%}
+                        {{- role -}}
+                    {%- endfor -%}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'enabled'|tra('userAccount') }}</th>
+                <td>
+                    {%- if userAccount.enabled -%}
+                        <span class="text-success fa fa-check"></span> {{ 'yes'|tr }}
+                    {%- else -%}
+                        <span class="text-danger fa fa-remove"></span> {{ 'no'|tr }}
+                    {%- endif -%}
+                </td>
+            </tr>
             {% for attribute in attributes %}
                 <tr>
                     <th>{{ attribute.title }}</th>
@@ -52,7 +71,7 @@
     </table>
 
     <p>
-        <a href="{{ path('userProfile.edit') }}" class="btn btn-primary"><span class="fa fa-pencil"></span> {{ 'edit'|tr }}</a>
+        <a href="{{ path('admin.userAccount.editProfile', { userAccountId: userAccount.id }) }}" class="btn btn-primary"><span class="fa fa-pencil"></span> {{ 'edit'|tr }}</a>
         <a href="{{ path('admin.userAccount.list') }}" class="btn btn-secondary">{{ 'back'|tr }}</a>
     </p>
 {% endblock %}

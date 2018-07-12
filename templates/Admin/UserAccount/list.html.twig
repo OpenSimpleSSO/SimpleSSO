@@ -8,6 +8,7 @@
             <tr>
                 <th>{{ 'displayName'|tra('userAccount') }}</th>
                 <th>{{ 'emailAddress'|tra('userAccount') }}</th>
+                <th>{{ 'enabled'|tra('userAccount') }}</th>
                 <th></th>
             </tr>
         </thead>
@@ -24,6 +25,13 @@
                                 <span class="fa fa-remove"></span> {{ 'emailAddressUnverified'|tr }}
                             {%- endif -%}
                         )</span>
+                    </td>
+                    <td>
+                        {%- if userAccount.emailAddressVerified -%}
+                            <span class="fa fa-check text-success"></span>
+                        {%- else -%}
+                            <span class="fa fa-remove text-danger"></span>
+                        {%- endif -%}
                     </td>
                     <td>
                         <a href="{{ path('admin.userAccount.profile', { userAccountId: userAccount.id }) }}">{{ 'showProfile'|tr }}</a>

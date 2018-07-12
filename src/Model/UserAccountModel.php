@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Entity\UserAccount;
 use App\Entity\UserAccountAttribute;
+use App\Model\Data\Admin\UserAccount\ProfileEdition as AdminProfileEdition;
 use App\Model\Data\Api\User\PasswordChange;
 use App\Model\Data\Api\User\ProfileEdition as ApiProfileEdition;
 use App\Model\Data\Generic\BaseProfileEdition;
@@ -123,6 +124,41 @@ class UserAccountModel
     }
 
     /**
+     * @param UserAccount $userAccount
+     * @return AdminProfileEdition
+     */
+    public function generateAdminProfileEditionData(UserAccount $userAccount): AdminProfileEdition
+    {
+        $data = new AdminProfileEdition();
+        $data->firstName = $userAccount->firstName;
+        $data->lastName = $userAccount->lastName;
+        $data->emailAddress = $userAccount->emailAddress;
+        foreach ($this->attributeModel->get() as $attribute) {
+            $value = $userAccount->getAttribute($attribute->key);
+            if ($value === null) {
+                $data->extraData[$attribute->key] = null;
+            } else {
+                switch ($attribute->type) {
+                    case UserAccountAttribute::TYPE_DATE:
+                        $data->extraData[$attribute->key] = new DateTime($value);
+                        break;
+
+                    case UserAccountAttribute::TYPE_DATETIME:
+                        $data->extraData[$attribute->key] = new DateTime($value);
+                        break;
+
+                    default:
+                        $data->extraData[$attribute->key] = $value;
+                }
+            }
+        }
+        $data->roles = json_encode($userAccount->roles);
+        $data->enabled = $userAccount->enabled;
+
+        return $data;
+    }
+
+    /**
      * @param UserAccount        $userAccount
      * @param BaseProfileEdition $data
      */
@@ -133,6 +169,10 @@ class UserAccountModel
         $userAccount->lastName = $data->lastName;
         if ($data instanceof ApiProfileEdition) {
             $userAccount->roles = $data->roles;
+        }
+        if ($data instanceof AdminProfileEdition) {
+            $userAccount->roles = json_decode($data->roles);
+            $userAccount->enabled = $data->enabled;
         }
         $this->updateExtraData($userAccount, $data->extraData);
     }
