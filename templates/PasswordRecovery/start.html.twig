@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <div class="form-group">
+            <button class="btn btn-primary">{{ 'submit'|tr }}</button>
+            <a href="{{ path('main.home') }}" class="btn btn-secondary">{{ 'back'|tr }}</a>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}

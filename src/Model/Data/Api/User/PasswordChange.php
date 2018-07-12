@@ -2,10 +2,10 @@
 
 namespace App\Model\Data\Api\User;
 
+use App\Model\Data\Generic\BasePasswordChange;
 use Symfony\Component\Validator\Constraints;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class PasswordChange
+class PasswordChange extends BasePasswordChange
 {
     /**
      * @var string
@@ -17,57 +17,4 @@ class PasswordChange
      * )
      */
     public $password;
-
-    /**
-     * Validate password. Will check password strength.
-     *
-     * @Constraints\Callback()
-     *
-     * @param ExecutionContextInterface $context
-     */
-    public function validatePassword(ExecutionContextInterface $context): void
-    {
-        // Check password strength.
-
-        $containsLowerCase = false;
-        $containsUpperCase = false;
-        $containsDigit = false;
-        for ($index = 0; $index < mb_strlen($this->password); ++$index) {
-            $char = $this->password[$index];
-            switch (true) {
-                case $char >= 'a' && $char <= 'z':
-                    $containsLowerCase = true;
-                    break;
-
-                case $char >= 'A' && $char <= 'Z':
-                    $containsUpperCase = true;
-                    break;
-
-                case $char >= '0' && $char <= '9':
-                    $containsDigit = true;
-                    break;
-            }
-            if ($containsLowerCase && $containsUpperCase && $containsDigit) {
-                break;
-            }
-        }
-        if (!$containsLowerCase) {
-            $context
-                ->buildViolation('Password must contains at least one lower case letter.')
-                ->atPath('password')
-                ->addViolation();
-        }
-        if (!$containsUpperCase) {
-            $context
-                ->buildViolation('Password must contains at least one upper case letter.')
-                ->atPath('password')
-                ->addViolation();
-        }
-        if (!$containsDigit) {
-            $context
-                ->buildViolation('Password must contains at least one digit.')
-                ->atPath('password')
-                ->addViolation();
-        }
-    }
 }

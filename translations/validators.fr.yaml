@@ -30,6 +30,7 @@ userAccount:
         notBlank: "L’adresse e-mail est obligatoire."
         email: "L’adresse e-mail est incorrecte."
         alreadyUsed: "Cette adresse e-mail est déjà utilisée. Si vous avez oublié votre mot de passe, vous pouvez utiliser la fonctionnalité \"mot de passe oublié\" depuis la page de connexion."
+        notMatchingAnyAccount: "Aucun compte utilisateur trouvé pour cette adresse e-mail."
 
     password:
         notBlank: "Le mot de passe est obligatoire."

@@ -63,4 +63,17 @@ class UserAccountRepository extends Repository
             ->setParameter('expirationDate', new DateTime())
             ->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * @param string $emailAddress
+     * @return UserAccount|null
+     */
+    public function findByEmailAddress(string $emailAddress): ?UserAccount
+    {
+        return $this
+            ->createQueryBuilder('ua')
+            ->where('ua.emailAddress = :emailAddress')
+            ->setParameter('emailAddress', $emailAddress)
+            ->getQuery()->getOneOrNullResult();
+    }
 }

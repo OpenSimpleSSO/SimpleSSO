@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <p>{{ 'message'|tr({ emailAddress: emailAddress }) }}</p>
+
+    <p><a href="{{ path('main.home') }}" class="btn btn-secondary">{{ 'back'|tr }}</a></p>
+{% endblock %}
+

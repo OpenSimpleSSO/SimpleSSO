@@ -30,6 +30,7 @@ userAccount:
         notBlank: "Must provide an email address."
         email: "Email address is invalid."
         alreadyUsed: "Email address already used. If you forgot your password, please use the \"password forgotten\" feature on the login page."
+        notMatchingAnyAccount: "No user account were found with this email address."
 
     password:
         notBlank: "Must provide a password."

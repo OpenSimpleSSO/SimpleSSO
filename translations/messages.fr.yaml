@@ -121,6 +121,34 @@ email:
         content: "Vous devez valider votre adresse e-mail. Pour cela, veuillez cliquer sur le lien ci-dessous."
         confirmEmailAddress: "Confirmer l’adresse e-mail"
 
+    passwordRecovery:
+        subject: "Mot de passe oublié"
+        greeting: "Bonjour %displayName%,"
+        content: "Vous avez déclaré avoir oublié votre mot de passe. Veuillez cliquez sur le lien ci-dessous afin de choisir un nouveau mot de passe."
+        confirm: "Choisir un nouveau mot de passe"
+
+
+
+passwordRecovery:
+    start:
+        title: "Demander un nouveau mot de passe"
+        emailAddress: "Votre adresse e-mail"
+        submit: "Demander un nouveau mot de passe"
+        back: "Retour"
+
+    emailSent:
+        title: "Un e-mail vous a été envoyé"
+        message: "Un e-mail a été envoyé sur votre adresse e-mail %emailAddress%. Veuillez consulter votre boite de réception et cliquer sur le lien contenu dans l'e-mail pour continuer la procédure."
+        back: "Retour"
+
+    authenticate:
+        error: "Lien invalide. Pour des raisons de sécurité, le lien n’est valable qu’un certain temps. Vous devez cliquer sur le lien reçu par e-mail dès réception. Vous ne devez pas fermer votre navigateur entre temps. Merci de recommencer la procédure."
+
+    changePassword:
+        title: "Choisissez un nouveau mot de passe"
+        submit: "Enregistrer le mot de passe"
+        success: "Votre nouveau mot de passe a été enregistré."
+
 
 
 userManagement:
@@ -137,6 +165,7 @@ userManagement:
         title: "Connexion"
         login: "Se connecter"
         register: "Pas encore de compte ? Inscrivez-vous"
+        recoverPassword: "Mot de passe oublié ?"
 
 
 

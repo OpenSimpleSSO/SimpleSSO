@@ -5,8 +5,8 @@ namespace App\Model;
 use App\Entity\UserAccount;
 use App\Entity\UserAccountAttribute;
 use App\Model\Data\Admin\UserAccount\ProfileEdition as AdminProfileEdition;
-use App\Model\Data\Api\User\PasswordChange;
 use App\Model\Data\Api\User\ProfileEdition as ApiProfileEdition;
+use App\Model\Data\Generic\BasePasswordChange;
 use App\Model\Data\Generic\BaseProfileEdition;
 use App\Model\Data\Generic\BaseRegistration;
 use App\Model\Data\UserManagement\ProfileEdition;
@@ -178,10 +178,10 @@ class UserAccountModel
     }
 
     /**
-     * @param UserAccount    $userAccount
-     * @param PasswordChange $data
+     * @param UserAccount        $userAccount
+     * @param BasePasswordChange $data
      */
-    public function changePassword(UserAccount $userAccount, PasswordChange $data): void
+    public function changePassword(UserAccount $userAccount, BasePasswordChange $data): void
     {
         $userAccount->password = $this->passwordEncoder->encodePassword($userAccount, $data->password);
     }

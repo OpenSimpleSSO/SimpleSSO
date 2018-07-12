@@ -85,6 +85,23 @@ class EmailModel
     }
 
     /**
+     * Send an email to authenticate the user through its email address in order to recover the password.
+     *
+     * @param UserAccount $userAccount
+     */
+    public function sendPasswordRecoveryEmail(UserAccount $userAccount): void
+    {
+        $this->send(
+            $userAccount->emailAddress,
+            $this->translationModel->translate('email.passwordRecovery.subject'),
+            'Email/passwordRecovery.html.twig',
+            [
+                'userAccount' => $userAccount,
+            ]
+        );
+    }
+
+    /**
      * Send an email.
      *
      * @param string $emailAddress
