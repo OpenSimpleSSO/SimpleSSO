@@ -158,7 +158,7 @@ userManagement:
         lastName: "Votre nom"
         emailAddress: "Votre adresse e-mail"
         password: "Choisissez votre mot de passe"
-        passwordRepeat: "Répétez votre mot de passe"
+        passwordRepeat: "Confirmez votre mot de passe"
         submit: "Créer mon compte"
 
     login:
@@ -178,6 +178,7 @@ userProfile:
         yes: "Oui"
         no: "Non"
         edit: "Modifier le profil"
+        changePassword: "Modifier votre mot de passe"
         logout: "Se déconnecter"
         admin:
             title: "Administration"
@@ -201,3 +202,12 @@ userProfile:
         title: "Adresse e-mail vérifiée"
         message: "Votre adresse e-mail %emailAddress% a été vérifiée avec succès."
         profile: "Voir votre profil utilisateur"
+
+    changePassword:
+        title: "Modification de votre mot de passe"
+        currentPassword: "Saisissez votre mot de passe actuel"
+        password: "Choisissez un nouveau mot de passe"
+        passwordRepeat: "Confirmez votre nouveau mot de passe"
+        submit: "Enregistrer le mot de passe"
+        cancel: "Annuler le changement de mot de passe"
+        success: "Votre mot de passe a été mis à jour."

@@ -2,6 +2,7 @@
 
 namespace App\Form\UserManagement;
 
+use App\Form\AttributesType;
 use App\Model\Data\UserManagement\Registration;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;

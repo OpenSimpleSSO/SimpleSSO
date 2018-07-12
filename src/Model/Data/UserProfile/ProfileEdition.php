@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\Data\UserManagement;
+namespace App\Model\Data\UserProfile;
 
 use App\Model\Data\Generic\BaseProfileEdition;
 

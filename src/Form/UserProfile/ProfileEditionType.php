@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Form\UserManagement;
+namespace App\Form\UserProfile;
 
-use App\Model\Data\UserManagement\ProfileEdition;
+use App\Form\AttributesType;
+use App\Model\Data\UserProfile\ProfileEdition;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

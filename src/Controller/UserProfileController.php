@@ -3,19 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\UserAccount;
-use App\Form\UserManagement\ProfileEditionType;
+use App\Form\UserProfile\ChangePasswordType;
+use App\Form\UserProfile\ProfileEditionType;
+use App\Model\Data\UserProfile\ChangePassword;
 use App\Model\EmailModel;
 use App\Model\UserAccountAttributeModel;
 use App\Model\UserAccountModel;
 use App\Repository\UserAccountRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Vinorcola\HelperBundle\Controller;
 
 /**
@@ -24,8 +25,7 @@ use Vinorcola\HelperBundle\Controller;
 class UserProfileController extends Controller
 {
     /**
-     * @Route("", name="show")
-     * @Method("GET")
+     * @Route("", methods={"GET"}, name="show")
      * @Security("is_granted('ROLE_USER')")
      *
      * @param UserAccountAttributeModel $attributeModel
@@ -40,8 +40,7 @@ class UserProfileController extends Controller
     }
 
     /**
-     * @Route("/edit", name="edit")
-     * @Method({"GET", "POST"})
+     * @Route("/edit", methods={"GET", "POST"}, name="edit")
      * @Security("is_granted('ROLE_USER')")
      *
      * @param Request          $request
@@ -84,8 +83,7 @@ class UserProfileController extends Controller
     }
 
     /**
-     * @Route("/send-verification-email", name="sendVerificationEmail")
-     * @Method("GET")
+     * @Route("/send-verification-email", methods={"GET"}, name="sendVerificationEmail")
      * @Security("is_granted('ROLE_USER')")
      *
      * @param UserAccountModel $model
@@ -114,10 +112,9 @@ class UserProfileController extends Controller
     }
 
     /**
-     * @Route("/confirm-email-address/{token}", name="confirmEmailAddress", requirements={
+     * @Route("/confirm-email-address/{token}", methods={"GET"}, name="confirmEmailAddress", requirements={
      *     "token": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      * })
-     * @Method("GET")
      *
      * @param string                $token
      * @param UserAccountRepository $repository
@@ -140,6 +137,41 @@ class UserProfileController extends Controller
 
         return $this->render('UserProfile/confirmEmailAddress.html.twig', [
             'userAccount' => $userAccount,
+        ]);
+    }
+
+    /**
+     * @Route("/change-password", methods={"GET", "POST"}, name="changePassword")
+     * @Security("is_granted('ROLE_USER')")
+     *
+     * @param Request          $request
+     * @param UserAccountModel $model
+     * @return Response
+     */
+    public function changePassword(Request $request, UserAccountModel $model): Response
+    {
+        $form = $this->createForm(ChangePasswordType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            /** @var UserAccount $userAccount */
+            $userAccount = $this->getUser();
+            /** @var ChangePassword $data */
+            $data = $form->getData();
+            $currentPasswordValid = $model->isPasswordValid($userAccount, $data->currentPassword);
+            if ($form->isValid() && $currentPasswordValid) {
+                $model->changePassword($userAccount, $data);
+                $this->saveDatabase();
+                $this->addSuccessMessage();
+
+                return $this->redirectToRoute('userProfile.show');
+            }
+            if (!$currentPasswordValid) {
+                $this->addFormError($form['currentPassword'], 'userAccount.password.invalidPassword');
+            }
+        }
+
+        return $this->render('UserProfile/changePassword.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

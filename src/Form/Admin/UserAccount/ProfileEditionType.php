@@ -2,7 +2,7 @@
 
 namespace App\Form\Admin\UserAccount;
 
-use App\Form\UserManagement\AttributesType;
+use App\Form\AttributesType;
 use App\Model\Data\Admin\UserAccount\ProfileEdition;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

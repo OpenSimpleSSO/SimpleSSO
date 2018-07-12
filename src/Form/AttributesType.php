@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\UserManagement;
+namespace App\Form;
 
 use App\Entity\UserAccountAttribute;
 use App\Model\UserAccountAttributeModel;

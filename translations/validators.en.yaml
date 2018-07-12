@@ -40,6 +40,7 @@ userAccount:
         upperCase: "Password must contains an upper case letter."
         digit: "Password must contains a digit."
         repeat: "The two passwords must match."
+        invalidPassword: "Invalid password."
 
     roles:
         minLength: "Role must be at least {{ limit }} characters long."

@@ -9,7 +9,7 @@ use App\Model\Data\Api\User\ProfileEdition as ApiProfileEdition;
 use App\Model\Data\Generic\BasePasswordChange;
 use App\Model\Data\Generic\BaseProfileEdition;
 use App\Model\Data\Generic\BaseRegistration;
-use App\Model\Data\UserManagement\ProfileEdition;
+use App\Model\Data\UserProfile\ProfileEdition;
 use App\Repository\UserAccountRepository;
 use DateTime;
 use Ramsey\Uuid\Uuid;
@@ -175,6 +175,16 @@ class UserAccountModel
             $userAccount->enabled = $data->enabled;
         }
         $this->updateExtraData($userAccount, $data->extraData);
+    }
+
+    /**
+     * @param UserAccount $userAccount
+     * @param string      $password
+     * @return bool
+     */
+    public function isPasswordValid(UserAccount $userAccount, string $password): bool
+    {
+        return $this->passwordEncoder->isPasswordValid($userAccount, $password);
     }
 
     /**

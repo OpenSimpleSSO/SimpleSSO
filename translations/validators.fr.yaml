@@ -40,6 +40,7 @@ userAccount:
         upperCase: "Le mot de passe doit contenir au moins une lettre majuscule."
         digit: "Le mot de passe doit contenir au moins un chiffre."
         repeat: "Les deux mots de passe ne correspondent pas. Merci de recommencer."
+        invalidPassword: "Mot de passe invalide."
 
     roles:
         minLength: "Les rôles doivent faire au moins {{ limit }} caractères."
