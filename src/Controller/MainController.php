@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use SimpleSSO\CommonBundle\Model\OpenSslModel;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Vinorcola\HelperBundle\Controller;
 
 /**
@@ -14,8 +13,7 @@ use Vinorcola\HelperBundle\Controller;
 class MainController extends Controller
 {
     /**
-     * @Route("", name="home")
-     * @Method("GET")
+     * @Route("", name="home", methods={"GET"})
      *
      * @return Response
      */
@@ -25,8 +23,7 @@ class MainController extends Controller
     }
 
     /**
-     * @Route("/public-key", name="publicKey")
-     * @Method("GET")
+     * @Route("/public-key", methods={"GET"}, name="publicKey")
      *
      * @param OpenSslModel $securityModel
      * @return Response

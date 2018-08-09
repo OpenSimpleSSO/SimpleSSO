@@ -9,14 +9,13 @@ use App\Model\UserAccountModel;
 use App\Repository\ClientRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use LogicException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Vinorcola\HelperBundle\Controller;
@@ -30,8 +29,7 @@ class UserManagementController extends Controller
     private const SESSION_ACCESS_TOKEN_DATA = 'authentication.access-token-data';
 
     /**
-     * @Route("/authenticate", name="authenticate")
-     * @Method("GET")
+     * @Route("/authenticate", methods={"GET"}, name="authenticate")
      *
      * @param SessionInterface      $session
      * @param TokenStorageInterface $tokenStorage
@@ -59,8 +57,7 @@ class UserManagementController extends Controller
     }
 
     /**
-     * @Route("/generate-auth-token", name="generateAuthToken")
-     * @Method("GET")
+     * @Route("/generate-auth-token", methods={"GET"}, name="generateAuthToken")
      * @Security("is_granted('ROLE_USER')")
      *
      * @param SessionInterface $session
@@ -91,8 +88,7 @@ class UserManagementController extends Controller
     }
 
     /**
-     * @Route("/register", name="register")
-     * @Method({"GET", "POST"})
+     * @Route("/register", methods={"GET", "POST"}, name="register")
      *
      * @param Request          $request
      * @param UserAccountModel $model
@@ -122,8 +118,7 @@ class UserManagementController extends Controller
     }
 
     /**
-     * @Route("/login", name="login")
-     * @Method({"GET", "POST"})
+     * @Route("/login", methods={"GET", "POST"}, name="login")
      *
      * @param AuthenticationUtils $authenticationUtils
      * @return Response
@@ -137,8 +132,7 @@ class UserManagementController extends Controller
     }
 
     /**
-     * @Route("/logout", name="logout")
-     * @Method("GET")
+     * @Route("/logout", methods={"GET"}, name="logout")
      */
     public function logout(): void
     {
