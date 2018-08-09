@@ -28,10 +28,24 @@ class CreateEditClient
     /**
      * @var string
      *
-     * @Constraints\NotBlank(message="client.redirectUrl.notBlank")
-     * @Constraints\Url(message="client.redirectUrl.url")
+     * @Constraints\NotBlank(message="client.url.notBlank")
+     * @Constraints\Url(message="client.url.url")
      */
-    public $redirectUrl;
+    public $url;
+
+    /**
+     * @var string
+     *
+     * @Constraints\NotBlank(message="client.redirectPath.notBlank")
+     */
+    public $redirectPath;
+
+    /**
+     * @var string
+     *
+     * @Constraints\NotBlank(message="client.logoutPath.notBlank")
+     */
+    public $logoutPath;
 
     /**
      * @Constraints\Callback()

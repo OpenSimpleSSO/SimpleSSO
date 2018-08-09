@@ -32,7 +32,9 @@ class ClientModel
         $client = new Client();
         $client->title = $data->title;
         $client->publicKey = $data->publicKey;
-        $client->redirectUrl = $data->redirectUrl;
+        $client->url = $data->url;
+        $client->redirectPath = $data->redirectPath[0] === '/' ? $data->redirectPath : '/' . $data->redirectPath;
+        $client->logoutPath = $data->logoutPath[0] === '/' ? $data->logoutPath : '/' . $data->logoutPath;
         $this->repository->save($client);
 
         return $client;
@@ -47,7 +49,9 @@ class ClientModel
         $data = new CreateEditClient();
         $data->title = $client->title;
         $data->publicKey = $client->publicKey;
-        $data->redirectUrl = $client->redirectUrl;
+        $data->url = $client->url;
+        $data->redirectPath = $client->redirectPath;
+        $data->logoutPath = $client->logoutPath;
 
         return $data;
     }
@@ -60,7 +64,10 @@ class ClientModel
     {
         $client->title = $data->title;
         $client->publicKey = $data->publicKey;
-        $client->redirectUrl = $data->redirectUrl;
+        $client->url = $data->url;
+        $client->redirectPath = $data->redirectPath[0] === '/' ? $data->redirectPath : '/' . $data->redirectPath;
+        $client->logoutPath = $data->logoutPath[0] === '/' ? $data->logoutPath : '/' . $data->logoutPath;
+        $this->repository->save($client);
     }
 
     /**

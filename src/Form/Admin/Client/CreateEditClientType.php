@@ -17,7 +17,9 @@ class CreateEditClientType extends AbstractType
         $builder
             ->add('title', TextType::class)
             ->add('publicKey', TextareaType::class)
-            ->add('redirectUrl', UrlType::class);
+            ->add('url', UrlType::class)
+            ->add('redirectPath', TextType::class)
+            ->add('logoutPath', TextType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

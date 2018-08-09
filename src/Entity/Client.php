@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Mapping\Entity()
+ * @Mapping\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 class Client implements UserInterface
 {
@@ -38,7 +39,21 @@ class Client implements UserInterface
      *
      * @Mapping\Column(type="string")
      */
-    public $redirectUrl;
+    public $url;
+
+    /**
+     * @var string
+     *
+     * @Mapping\Column(type="string")
+     */
+    public $redirectPath;
+
+    /**
+     * @var string
+     *
+     * @Mapping\Column(type="string")
+     */
+    public $logoutPath;
 
     /**
      * @var string|null

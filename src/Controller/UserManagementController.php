@@ -84,7 +84,7 @@ class UserManagementController extends Controller
         $session->remove(self::SESSION_ACCESS_TOKEN_DATA);
         $authToken = $authTokenModel->generate($this->getUser(), $client, $accessToken['nonce']);
 
-        return $this->redirect($client->redirectUrl . '?' . $authToken->getAsUrlParameters());
+        return $this->redirect($client->url . $client->redirectPath . '?' . $authToken->getAsUrlParameters());
     }
 
     /**

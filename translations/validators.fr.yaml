@@ -9,9 +9,15 @@ client:
         notBlank: "La clé publique est obligatoire."
         invalidKey: "Clé publique invalide."
 
-    redirectUrl:
-        notBlank: "L’url de retour est obligatoire."
+    url:
+        notBlank: "L’url est obligatoire."
         url: "L’url est invalide."
+
+    redirectPath:
+        notBlank: "Le point de retour est obligatoire."
+
+    logoutPath:
+        notBlank: "Le point de déconnexion est obligatoire."
 
 
 

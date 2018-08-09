@@ -4,7 +4,9 @@ attribute:
         id: "Identifiant unique"
         title: "Nom du client"
         publicKey: "Clé public"
-        redirectUrl: "URL de retour"
+        url: "URL"
+        redirectPath: "Point de retour"
+        logoutPath: "Point de déconnexion"
 
     userAccount:
         id: "Identifiant unique"

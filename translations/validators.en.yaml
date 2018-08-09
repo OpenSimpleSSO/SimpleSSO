@@ -9,9 +9,15 @@ client:
         notBlank: "Must provide a public key."
         invalidKey: "Public key is invalid."
 
-    redirectUrl:
-        notBlank: "Must provide a redirect url."
+    url:
+        notBlank: "Must provide a url."
         url: "Url is invalid."
+
+    redirectPath:
+        notBlank: "Must provide a redirect path."
+
+    logoutPath:
+        notBlank: "Must provide a logout path."
 
 
 

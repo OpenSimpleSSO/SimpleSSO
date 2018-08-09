@@ -14,7 +14,9 @@
                     <th>{{ 'title'|tra('client') }}</th>
                     <th>{{ 'id'|tra('client') }}</th>
                     <th>{{ 'publicKey'|tra('client') }}</th>
-                    <th>{{ 'redirectUrl'|tra('client') }}</th>
+                    <th>{{ 'url'|tra('client') }}</th>
+                    <th>{{ 'redirectPath'|tra('client') }}</th>
+                    <th>{{ 'logoutPath'|tra('client') }}</th>
                     <th></th>
                 </tr>
             </thead>
@@ -24,7 +26,9 @@
                         <td>{{ client.title }}</td>
                         <td><code>{{ client.id }}</code></td>
                         <td><pre>{{ client.publicKey }}</pre></td>
-                        <td>{{ client.redirectUrl }}</td>
+                        <td>{{ client.url }}</td>
+                        <td>{{ client.redirectPath }}</td>
+                        <td>{{ client.logoutPath }}</td>
                         <td>
                             <a href="{{ path('admin.client.edit', { clientId: client.id }) }}"><span class="fa fa-pencil"></span> {{ 'edit'|tr }}</a><br />
                             <a href="{{ path('admin.client.delete', { clientId: client.id }) }}" class="text-danger"><span class="fa fa-trash"></span> {{ 'delete'|tr }}</a>
