@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
 use App\Form\UserManagement\RegistrationType;
 use App\Model\AuthTokenModel;
 use App\Model\EmailModel;
@@ -27,6 +28,11 @@ class UserManagementController extends Controller
 {
     private const SESSION_CLIENT_ID = 'authentication.client-id';
     private const SESSION_ACCESS_TOKEN_DATA = 'authentication.access-token-data';
+    private const SESSION_LOGOUT_STATUS = 'authentication.logout-status';
+
+    private const LOGOUT_STATUS_WAITING = 'waiting';
+    private const LOGOUT_STATUS_PROCESSING = 'processing';
+    private const LOGOUT_STATUS_LOGGED_OUT = 'logged-out';
 
     /**
      * @Route("/authenticate", methods={"GET"}, name="authenticate")
@@ -132,7 +138,59 @@ class UserManagementController extends Controller
     }
 
     /**
-     * @Route("/logout", methods={"GET"}, name="logout")
+     * @Route("/logout", name="processLogout")
+     *
+     * @param SessionInterface $session
+     * @param ClientRepository $clientRepository
+     * @return Response
+     */
+    public function processLogout(SessionInterface $session, ClientRepository $clientRepository): Response
+    {
+        if (!$session->has(self::SESSION_LOGOUT_STATUS)) {
+            // Init session with all clients.
+            $clients = $clientRepository->findAll();
+            $status = array_map(function(Client $client): array {
+                return [
+                    'client' => $client->getId(),
+                    'url'    => $client->url . $client->logoutPath,
+                    'status' => self::LOGOUT_STATUS_WAITING,
+                ];
+            }, $clients);
+        } else {
+            // Switch processing client to logout.
+            $status = $session->get(self::SESSION_LOGOUT_STATUS);
+            foreach ($status as &$client) {
+                if ($client['status'] === self::LOGOUT_STATUS_PROCESSING) {
+                    $client['status'] = self::LOGOUT_STATUS_LOGGED_OUT;
+                    break;
+                }
+            }
+        }
+
+        // Find next client to process.
+        $nextClient = null;
+        foreach ($status as &$client) {
+            if ($client['status'] === self::LOGOUT_STATUS_WAITING) {
+                $client['status'] = self::LOGOUT_STATUS_PROCESSING;
+                $nextClient = $client;
+                break;
+            }
+        }
+
+        // All clients have been logged out, so we logout from the SSO.
+        if (!$nextClient) {
+            return $this->redirectToRoute('userManagement.logout');
+        }
+
+        // Save status.
+        $session->set(self::SESSION_LOGOUT_STATUS, $status);
+
+        // Redirect to client logout path.
+        return $this->redirect($nextClient['url']);
+    }
+
+    /**
+     * @Route("/logout-sso", methods={"GET"}, name="logout")
      */
     public function logout(): void
     {
