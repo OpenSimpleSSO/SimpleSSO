@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Client;
 use App\Form\UserManagement\RegistrationType;
 use App\Model\AuthTokenModel;
+use App\Model\ConfigModel;
 use App\Model\EmailModel;
 use App\Model\UserAccountModel;
 use App\Repository\ClientRepository;
@@ -97,12 +98,22 @@ class UserManagementController extends Controller
      * @Route("/register", methods={"GET", "POST"}, name="register")
      *
      * @param Request          $request
+     * @param ConfigModel      $configModel
      * @param UserAccountModel $model
      * @param EmailModel       $emailModel
      * @return Response
      */
-    public function register(Request $request, UserAccountModel $model, EmailModel $emailModel): Response
-    {
+    public function register(
+        Request $request,
+        ConfigModel $configModel,
+        UserAccountModel $model,
+        EmailModel $emailModel
+    ): Response {
+
+        if ($configModel->disableRegistrationActions()) {
+            throw new NotFoundHttpException();
+        }
+
         $form = $this->createForm(RegistrationType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -127,13 +138,15 @@ class UserManagementController extends Controller
      * @Route("/login", methods={"GET", "POST"}, name="login")
      *
      * @param AuthenticationUtils $authenticationUtils
+     * @param ConfigModel         $configModel
      * @return Response
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, ConfigModel $configModel): Response
     {
         return $this->render('UserManagement/login.html.twig', [
             'lastEmailAddress' => $authenticationUtils->getLastUsername(),
             'error'            => $authenticationUtils->getLastAuthenticationError(),
+            'config'           => $configModel,
         ]);
     }
 

@@ -1,3 +1,5 @@
+/config.yaml
+
 ###> symfony/framework-bundle ###
 .env
 /public/bundles/

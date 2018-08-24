@@ -20,7 +20,9 @@
         </div>
         <div class="form-group">
             <button class="btn btn-primary">{{ 'login'|tr }}</button>
-            <a href="{{ path('userManagement.register') }}">{{ 'register'|tr }}</a>
+            {% if not config.disableRegistrationLinks %}
+                <a href="{{ config.registrationUrl }}">{{ 'register'|tr }}</a>
+            {% endif %}
             <a href="{{ path('passwordRecovery.start') }}">{{ 'recoverPassword'|tr }}</a>
         </div>
     </form>

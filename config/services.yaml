@@ -13,6 +13,9 @@ services:
         resource: '../src/*'
         exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
 
+    App\Model\ConfigModel:
+        $config: []
+
     App\Model\EmailModel:
         $sendFromAddress: '%env(MAILER_SENDER_ADDRESS)%'
 

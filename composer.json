@@ -46,10 +46,6 @@
         {
             "type": "git",
             "url": "https://github.com/Vinorcola/ApiServerTools.git"
-        },
-        {
-            "type": "git",
-            "url": "https://github.com/Vinorcola/HelperBundle.git"
         }
     ],
     "config": {

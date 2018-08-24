@@ -1,0 +1,3 @@
+sso:
+#    disable_registration_route: false
+#    registration_url: "https://www.my-custom-service.com/registration"
