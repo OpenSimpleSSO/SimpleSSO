@@ -6,6 +6,7 @@ use App\Entity\UserAccount;
 use App\Entity\UserAccountAttribute;
 use App\Model\Data\Admin\UserAccount\ProfileEdition as AdminProfileEdition;
 use App\Model\Data\Api\User\ProfileEdition as ApiProfileEdition;
+use App\Model\Data\Api\User\Registration as ApiRegistration;
 use App\Model\Data\Generic\BasePasswordChange;
 use App\Model\Data\Generic\BaseProfileEdition;
 use App\Model\Data\Generic\BaseRegistration;
@@ -81,7 +82,9 @@ class UserAccountModel
         $this->generateToken($userAccount);
         $userAccount->firstName = $data->firstName;
         $userAccount->lastName = $data->lastName;
-        $userAccount->roles = [ 'ROLE_USER' ];
+        $userAccount->roles = $data instanceof ApiRegistration && $data->roles !== null ?
+            $data->roles :
+            [ 'ROLE_USER' ];
         $userAccount->password = $this->passwordEncoder->encodePassword($userAccount, $data->password);
         $userAccount->enabled = true;
         $this->updateExtraData($userAccount, $data->extraData);
