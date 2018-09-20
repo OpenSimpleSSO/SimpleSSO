@@ -1,3 +1,4 @@
 sso:
 #    disable_registration_route: false
 #    registration_url: "https://www.my-custom-service.com/registration"
+#    logout_redirect_url: "https://www.my-custom-service.com/my-custom-page" # Can be absolute URL or relative URI.

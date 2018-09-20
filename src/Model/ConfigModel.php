@@ -59,4 +59,16 @@ class ConfigModel
 
         return $this->config['registration_url'];
     }
+
+    /**
+     * @return string
+     */
+    public function getLogoutRedirectUrl(): string
+    {
+        if ($this->config['logout_redirect_url'] === null) {
+            return $this->urlGenerator->generate('userProfile.show');
+        }
+
+        return $this->config['logout_redirect_url'];
+    }
 }

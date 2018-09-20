@@ -20,6 +20,9 @@ class SsoConfigDefinition implements ConfigurationInterface
                 ->scalarNode('registration_url')
                     ->defaultNull()
                 ->end() // registration_url
+                ->scalarNode('logout_redirect_url')
+                    ->defaultNull()
+                ->end() // logout_redirect_url
             ->end()
         ;
 
