@@ -285,6 +285,7 @@ class UserController extends Controller
     {
         $data = [
             'id'                   => $userAccount->getId(),
+            'version'              => $userAccount->getVersion(),
             'emailAddress'         => $userAccount->getEmailAddress(),
             'emailAddressVerified' => $userAccount->isEmailAddressVerified(),
             'firstName'            => $userAccount->getFirstName(),
