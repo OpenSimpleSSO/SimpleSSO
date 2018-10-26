@@ -220,10 +220,10 @@ class UserController extends Controller
      *     "userAccountId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      * })
      *
-     * @param string                         $userAccountId
-     * @param UserAccountRepository          $repository
+     * @param string                    $userAccountId
+     * @param UserAccountRepository     $repository
      * @param UserAccountAttributeModel $attributeModel
-     * @param UserAccountModel               $model
+     * @param UserAccountModel          $model
      * @return Response
      */
     public function enable(
@@ -249,10 +249,10 @@ class UserController extends Controller
      *     "userAccountId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      * })
      *
-     * @param string                         $userAccountId
-     * @param UserAccountRepository          $repository
+     * @param string                    $userAccountId
+     * @param UserAccountRepository     $repository
      * @param UserAccountAttributeModel $attributeModel
-     * @param UserAccountModel               $model
+     * @param UserAccountModel          $model
      * @return Response
      */
     public function disable(
