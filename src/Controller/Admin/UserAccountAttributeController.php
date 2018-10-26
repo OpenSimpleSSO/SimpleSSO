@@ -6,11 +6,10 @@ use App\Form\Admin\UserAccountAttribute\CreateEditUserAccountAttributeType;
 use App\Model\UserAccountAttributeModel;
 use App\Repository\UserAccountAttributeRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Vinorcola\HelperBundle\Controller;
 
 /**
@@ -19,8 +18,7 @@ use Vinorcola\HelperBundle\Controller;
 class UserAccountAttributeController extends Controller
 {
     /**
-     * @Route("", name="list")
-     * @Method("GET")
+     * @Route("", methods={"GET"}, name="list")
      *
      * @param UserAccountAttributeRepository $repository
      * @return Response
@@ -35,8 +33,7 @@ class UserAccountAttributeController extends Controller
     }
 
     /**
-     * @Route("/create", name="create")
-     * @Method({"GET", "POST"})
+     * @Route("/create", methods={"GET", "POST"}, name="create")
      *
      * @param Request                   $request
      * @param UserAccountAttributeModel $model
@@ -63,10 +60,9 @@ class UserAccountAttributeController extends Controller
     }
 
     /**
-     * @Route("/{attributeId}/edit", name="edit", requirements={
+     * @Route("/{attributeId}/edit", methods={"GET", "POST"}, name="edit", requirements={
      *     "attributeId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      * })
-     * @Method({"GET", "POST"})
      *
      * @param Request                        $request
      * @param string                         $attributeId

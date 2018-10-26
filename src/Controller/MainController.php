@@ -13,7 +13,7 @@ use Vinorcola\HelperBundle\Controller;
 class MainController extends Controller
 {
     /**
-     * @Route("", name="home", methods={"GET"})
+     * @Route("", methods={"GET"}, name="home")
      *
      * @return Response
      */

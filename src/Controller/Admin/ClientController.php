@@ -6,11 +6,10 @@ use App\Form\Admin\Client\CreateEditClientType;
 use App\Form\Admin\Client\DeleteClientType;
 use App\Model\ClientModel;
 use App\Repository\ClientRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Vinorcola\HelperBundle\Controller;
 
 /**
@@ -19,8 +18,7 @@ use Vinorcola\HelperBundle\Controller;
 class ClientController extends Controller
 {
     /**
-     * @Route("", name="list")
-     * @Method("GET")
+     * @Route("", methods={"GET"}, name="list")
      *
      * @param ClientRepository $repository
      * @return Response
@@ -35,8 +33,7 @@ class ClientController extends Controller
     }
 
     /**
-     * @Route("/create", name="create")
-     * @Method({"GET", "POST"})
+     * @Route("/create", methods={"GET", "POST"}, name="create")
      *
      * @param Request     $request
      * @param ClientModel $model
@@ -59,10 +56,9 @@ class ClientController extends Controller
     }
 
     /**
-     * @Route("/{clientId}/edit", name="edit", requirements={
+     * @Route("/{clientId}/edit", methods={"GET", "POST"}, name="edit", requirements={
      *     "clientId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      * })
-     * @Method({"GET", "POST"})
      *
      * @param Request          $request
      * @param string           $clientId
@@ -98,10 +94,9 @@ class ClientController extends Controller
     }
 
     /**
-     * @Route("/{clientId}/delete", name="delete", requirements={
+     * @Route("/{clientId}/delete", methods={"GET", "DELETE"}, name="delete", requirements={
      *     "clientId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      * })
-     * @Method({"GET", "DELETE"})
      *
      * @param Request          $request
      * @param string           $clientId

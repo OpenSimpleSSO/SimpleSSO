@@ -13,11 +13,10 @@ use App\Model\UserAccountAttributeModel;
 use App\Model\UserAccountModel;
 use App\Repository\UserAccountRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -31,10 +30,9 @@ use Vinorcola\ApiServerTools\InvalidInputException;
 class UserController extends Controller
 {
     /**
-     * @Route("/{userAccountId}", name="profile", requirements={
+     * @Route("/{userAccountId}", methods={"GET"}, name="profile", requirements={
      *     "userAccountId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      * })
-     * @Method("GET")
      * @Security("is_granted('ROLE_CLIENT')")
      *
      * @param string                    $userAccountId
@@ -57,8 +55,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/register", name="register")
-     * @Method("POST")
+     * @Route("/register", methods={"POST"}, name="register")
      * @Security("is_granted('ROLE_CLIENT')")
      *
      * @param Request                   $request
@@ -103,10 +100,9 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/{userAccountId}", name="editProfile", requirements={
+     * @Route("/{userAccountId}", methods={"PUT"}, name="editProfile", requirements={
      *     "userAccountId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      * })
-     * @Method("PUT")
      * @Security("is_granted('ROLE_CLIENT')")
      *
      * @param Request                   $request
@@ -164,10 +160,9 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/{userAccountId}/password", name="changePassword", requirements={
+     * @Route("/{userAccountId}/password", methods={"PUT"}, name="changePassword", requirements={
      *     "userAccountId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      * })
-     * @Method("PUT")
      * @Security("is_granted('ROLE_CLIENT')")
      *
      * @param Request               $request
@@ -203,10 +198,9 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/{userAccountId}/enable", name="enable", requirements={
+     * @Route("/{userAccountId}/enable", methods={"POST"}, name="enable", requirements={
      *     "userAccountId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      * })
-     * @Method("POST")
      * @Security("is_granted('ROLE_CLIENT')")
      *
      * @param string                         $userAccountId
@@ -234,10 +228,9 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/{userAccountId}/disable", name="disable", requirements={
+     * @Route("/{userAccountId}/disable", methods={"POST"}, name="disable", requirements={
      *     "userAccountId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      * })
-     * @Method("POST")
      * @Security("is_granted('ROLE_CLIENT')")
      *
      * @param string                         $userAccountId
