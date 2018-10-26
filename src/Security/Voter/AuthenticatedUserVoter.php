@@ -14,7 +14,7 @@ class AuthenticatedUserVoter extends Voter
      */
     protected function supports($attribute, $subject)
     {
-        return $attribute === self::ATTRIBUTE && $subject instanceof Request;
+        return $attribute === self::ATTRIBUTE;
     }
 
     /**
