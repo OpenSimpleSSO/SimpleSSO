@@ -58,7 +58,7 @@ class EmailModel
     public function sendRegistrationEmail(UserAccount $userAccount): void
     {
         $this->send(
-            $userAccount->emailAddress,
+            $userAccount->getEmailAddress(),
             $this->translationModel->translate('email.registration.subject'),
             'Email/registration.html.twig',
             [
@@ -75,7 +75,7 @@ class EmailModel
     public function sendEmailAddressVerificationEmail(UserAccount $userAccount): void
     {
         $this->send(
-            $userAccount->emailAddress,
+            $userAccount->getEmailAddress(),
             $this->translationModel->translate('email.emailAddressVerification.subject'),
             'Email/emailAddressVerification.html.twig',
             [
@@ -92,7 +92,7 @@ class EmailModel
     public function sendPasswordRecoveryEmail(UserAccount $userAccount): void
     {
         $this->send(
-            $userAccount->emailAddress,
+            $userAccount->getEmailAddress(),
             $this->translationModel->translate('email.passwordRecovery.subject'),
             'Email/passwordRecovery.html.twig',
             [

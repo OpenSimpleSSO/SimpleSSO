@@ -134,7 +134,7 @@ class UserController extends Controller
         if (!$userAccount) {
             throw new NotFoundHttpException('User account not found.');
         }
-        $initialEmailAddress = $userAccount->emailAddress;
+        $initialEmailAddress = $userAccount->getEmailAddress();
 
         /** @var ProfileEdition $data */
         $data = $jsonRequestModel->handleRequest($request, ProfileEdition::class);
@@ -143,7 +143,7 @@ class UserController extends Controller
             try {
                 $model->editProfile($userAccount, $data);
                 $this->saveDatabase();
-                if ($userAccount->emailAddress !== $initialEmailAddress) {
+                if ($userAccount->getEmailAddress() !== $initialEmailAddress) {
                     $emailModel->sendEmailAddressVerificationEmail($userAccount);
                 }
 
@@ -276,12 +276,12 @@ class UserController extends Controller
     {
         $data = [
             'id'                   => $userAccount->getId(),
-            'emailAddress'         => $userAccount->emailAddress,
-            'emailAddressVerified' => $userAccount->emailAddressVerified,
-            'firstName'            => $userAccount->firstName,
-            'lastName'             => $userAccount->lastName,
-            'roles'                => $userAccount->roles,
-            'enabled'              => $userAccount->enabled,
+            'emailAddress'         => $userAccount->getEmailAddress(),
+            'emailAddressVerified' => $userAccount->isEmailAddressVerified(),
+            'firstName'            => $userAccount->getFirstName(),
+            'lastName'             => $userAccount->getLastName(),
+            'roles'                => $userAccount->getRoles(),
+            'enabled'              => $userAccount->isEnabled(),
         ];
         foreach ($attributes as $attribute) {
             $data[$attribute->key] = $userAccount->getAttribute($attribute->key);

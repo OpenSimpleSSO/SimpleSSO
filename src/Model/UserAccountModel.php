@@ -12,8 +12,6 @@ use App\Model\Data\Generic\BaseProfileEdition;
 use App\Model\Data\Generic\BaseRegistration;
 use App\Model\Data\UserProfile\ProfileEdition;
 use App\Repository\UserAccountRepository;
-use DateTime;
-use Ramsey\Uuid\Uuid;
 use SimpleSSO\CommonBundle\Model\TokenModel;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -78,15 +76,14 @@ class UserAccountModel
      */
     public function create(BaseRegistration $data): UserAccount
     {
-        $userAccount = new UserAccount($data->emailAddress);
+        $userAccount = new UserAccount($data->emailAddress, $data->firstName, $data->lastName);
         $this->generateToken($userAccount);
-        $userAccount->firstName = $data->firstName;
-        $userAccount->lastName = $data->lastName;
-        $userAccount->roles = $data instanceof ApiRegistration && $data->roles !== null ?
-            $data->roles :
-            [ 'ROLE_USER' ];
-        $userAccount->password = $this->passwordEncoder->encodePassword($userAccount, $data->password);
-        $userAccount->enabled = true;
+        $userAccount->setRoles(
+            $data instanceof ApiRegistration && $data->roles !== null ?
+                $data->roles :
+                [ 'ROLE_USER' ]
+        );
+        $userAccount->setPassword($this->passwordEncoder->encodePassword($userAccount, $data->password));
         $this->updateExtraData($userAccount, $data->extraData);
         $this->repository->save($userAccount);
 
@@ -100,9 +97,9 @@ class UserAccountModel
     public function generateProfileEditionData(UserAccount $userAccount): ProfileEdition
     {
         $data = new ProfileEdition();
-        $data->firstName = $userAccount->firstName;
-        $data->lastName = $userAccount->lastName;
-        $data->emailAddress = $userAccount->emailAddress;
+        $data->firstName = $userAccount->getFirstName();
+        $data->lastName = $userAccount->getLastName();
+        $data->emailAddress = $userAccount->getEmailAddress();
         foreach ($this->attributeModel->get() as $attribute) {
             $value = $userAccount->getAttribute($attribute->key);
             if ($value === null) {
@@ -110,11 +107,11 @@ class UserAccountModel
             } else {
                 switch ($attribute->type) {
                     case UserAccountAttribute::TYPE_DATE:
-                        $data->extraData[$attribute->key] = new DateTime($value);
+                        $data->extraData[$attribute->key] = new \DateTimeImmutable($value);
                         break;
 
                     case UserAccountAttribute::TYPE_DATETIME:
-                        $data->extraData[$attribute->key] = new DateTime($value);
+                        $data->extraData[$attribute->key] = new \DateTimeImmutable($value);
                         break;
 
                     default:
@@ -133,9 +130,9 @@ class UserAccountModel
     public function generateAdminProfileEditionData(UserAccount $userAccount): AdminProfileEdition
     {
         $data = new AdminProfileEdition();
-        $data->firstName = $userAccount->firstName;
-        $data->lastName = $userAccount->lastName;
-        $data->emailAddress = $userAccount->emailAddress;
+        $data->firstName = $userAccount->getFirstName();
+        $data->lastName = $userAccount->getLastName();
+        $data->emailAddress = $userAccount->getEmailAddress();
         foreach ($this->attributeModel->get() as $attribute) {
             $value = $userAccount->getAttribute($attribute->key);
             if ($value === null) {
@@ -143,11 +140,11 @@ class UserAccountModel
             } else {
                 switch ($attribute->type) {
                     case UserAccountAttribute::TYPE_DATE:
-                        $data->extraData[$attribute->key] = new DateTime($value);
+                        $data->extraData[$attribute->key] = new \DateTimeImmutable($value);
                         break;
 
                     case UserAccountAttribute::TYPE_DATETIME:
-                        $data->extraData[$attribute->key] = new DateTime($value);
+                        $data->extraData[$attribute->key] = new \DateTimeImmutable($value);
                         break;
 
                     default:
@@ -155,8 +152,8 @@ class UserAccountModel
                 }
             }
         }
-        $data->roles = json_encode($userAccount->roles);
-        $data->enabled = $userAccount->enabled;
+        $data->roles = json_encode($userAccount->getRoles());
+        $data->enabled = $userAccount->isEnabled();
 
         return $data;
     }
@@ -168,14 +165,13 @@ class UserAccountModel
     public function editProfile(UserAccount $userAccount, BaseProfileEdition $data): void
     {
         $this->updateEmailAddress($userAccount, $data->emailAddress);
-        $userAccount->firstName = $data->firstName;
-        $userAccount->lastName = $data->lastName;
+        $userAccount->setName($data->firstName, $data->lastName);
         if ($data instanceof ApiProfileEdition) {
-            $userAccount->roles = $data->roles;
+            $userAccount->setRoles($data->roles);
         }
         if ($data instanceof AdminProfileEdition) {
-            $userAccount->roles = json_decode($data->roles);
-            $userAccount->enabled = $data->enabled;
+            $userAccount->setRoles(json_decode($data->roles));
+            $userAccount->setEnabled($data->enabled);
         }
         $this->updateExtraData($userAccount, $data->extraData);
     }
@@ -196,7 +192,7 @@ class UserAccountModel
      */
     public function changePassword(UserAccount $userAccount, BasePasswordChange $data): void
     {
-        $userAccount->password = $this->passwordEncoder->encodePassword($userAccount, $data->password);
+        $userAccount->setPassword($this->passwordEncoder->encodePassword($userAccount, $data->password));
     }
 
     /**
@@ -214,7 +210,7 @@ class UserAccountModel
      */
     public function enable(UserAccount $userAccount): void
     {
-        $userAccount->enabled = true;
+        $userAccount->setEnabled(true);
     }
 
     /**
@@ -222,7 +218,7 @@ class UserAccountModel
      */
     public function disable(UserAccount $userAccount): void
     {
-        $userAccount->enabled = false;
+        $userAccount->setEnabled(false);
     }
 
     /**
@@ -232,8 +228,9 @@ class UserAccountModel
      */
     public function generateToken(UserAccount $userAccount)
     {
-        $userAccount->token = Uuid::uuid4()->toString();
-        $userAccount->tokenExpirationDate = $this->tokenModel->getExpirationDate(self::TOKEN_VALIDITY_INTERVAL);
+        $userAccount->generateToken(
+            $this->tokenModel->getExpirationDate(self::TOKEN_VALIDITY_INTERVAL)
+        );
     }
 
     /**
@@ -241,7 +238,7 @@ class UserAccountModel
      */
     public function verifyEmailAddress(UserAccount $userAccount): void
     {
-        $userAccount->emailAddressVerified = true;
+        $userAccount->setEmailAddressVerified(true);
         $this->eraseToken($userAccount);
     }
 
@@ -253,10 +250,8 @@ class UserAccountModel
      */
     private function updateEmailAddress(UserAccount $userAccount, string $emailAddress): void
     {
-        if ($emailAddress !== $userAccount->emailAddress) {
-            $userAccount->emailAddress = $emailAddress;
-            $userAccount->uniqueEmailAddress = mb_strtolower($emailAddress);
-            $userAccount->emailAddressVerified = false;
+        if ($emailAddress !== $userAccount->getEmailAddress()) {
+            $userAccount->setEmailAddress($emailAddress);
             $this->generateToken($userAccount);
         }
     }
@@ -268,8 +263,7 @@ class UserAccountModel
      */
     private function eraseToken(UserAccount $userAccount)
     {
-        $userAccount->token = null;
-        $userAccount->tokenExpirationDate = null;
+        $userAccount->resetToken();
     }
 
     /**
@@ -278,27 +272,33 @@ class UserAccountModel
      */
     private function updateExtraData(UserAccount $userAccount, array $extraData)
     {
-        $userAccount->extraData = [];
+        $userAccount->resetAttributes();
         foreach ($this->attributeModel->get() as $attribute) {
             $value = $extraData[$attribute->key] ?? null;
             if ($value === null) {
-                $userAccount->extraData[$attribute->key] = null;
+                $userAccount->setAttribute($attribute->key, null);
             } else {
                 switch ($attribute->type) {
                     case UserAccountAttribute::TYPE_DATE:
-                        $userAccount->extraData[$attribute->key] = $value instanceof DateTime ?
-                            $value->format('Y-m-d') :
-                            $value;
+                        $userAccount->setAttribute(
+                            $attribute->key,
+                            $value instanceof \DateTimeInterface ?
+                                $value->format('Y-m-d') :
+                                $value
+                        );
                         break;
 
                     case UserAccountAttribute::TYPE_DATETIME:
-                        $userAccount->extraData[$attribute->key] = $value instanceof DateTime ?
-                            $value->format(DATE_ATOM) :
-                            $value;
+                        $userAccount->setAttribute(
+                            $attribute->key,
+                            $value instanceof \DateTimeInterface ?
+                                $value->format(DATE_ATOM) :
+                                $value
+                        );
                         break;
 
                     default:
-                        $userAccount->extraData[$attribute->key] = $value;
+                        $userAccount->setAttribute($attribute->key, $value);
                 }
             }
         }

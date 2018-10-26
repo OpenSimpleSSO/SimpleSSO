@@ -56,7 +56,7 @@ class UserProfileController extends Controller
 
         /** @var UserAccount $userAccount */
         $userAccount = $this->getUser();
-        $initialEmailAddress = $userAccount->emailAddress;
+        $initialEmailAddress = $userAccount->getEmailAddress();
 
         $form = $this->createForm(ProfileEditionType::class, $model->generateProfileEditionData($userAccount));
         $form->handleRequest($request);
@@ -64,7 +64,7 @@ class UserProfileController extends Controller
             try {
                 $model->editProfile($userAccount, $form->getData());
                 $this->saveDatabase();
-                if ($userAccount->emailAddress !== $initialEmailAddress) {
+                if ($userAccount->getEmailAddress() !== $initialEmailAddress) {
                     $emailModel->sendEmailAddressVerificationEmail($userAccount);
                 }
                 $this->addSuccessMessage();
@@ -72,7 +72,7 @@ class UserProfileController extends Controller
                 return $this->redirectToRoute('userProfile.show');
             } catch (UniqueConstraintViolationException $exception) {
                 // Revert email address to avoid security token change, and so user logout.
-                $userAccount->emailAddress = $initialEmailAddress;
+                $userAccount->setEmailAddress($initialEmailAddress);
                 $this->addFormError($form['emailAddress'], 'userAccount.emailAddress.alreadyUsed');
             }
         }
@@ -97,7 +97,7 @@ class UserProfileController extends Controller
 
         /** @var UserAccount $userAccount */
         $userAccount = $this->getUser();
-        if ($userAccount->emailAddressVerified) {
+        if ($userAccount->isEmailAddressVerified()) {
             // Do not send email if the address has already been verified.
             throw new BadRequestHttpException();
         }
@@ -105,7 +105,7 @@ class UserProfileController extends Controller
         $this->saveDatabase();
         $emailModel->sendEmailAddressVerificationEmail($userAccount);
         $this->addSuccessMessage([
-            'emailAddress' => $userAccount->emailAddress,
+            'emailAddress' => $userAccount->getEmailAddress(),
         ]);
 
         return $this->redirectToRoute('userProfile.show');

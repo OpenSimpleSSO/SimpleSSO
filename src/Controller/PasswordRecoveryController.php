@@ -50,10 +50,10 @@ class PasswordRecoveryController extends Controller
                 $model->generateToken($userAccount);
                 $this->saveDatabase();
                 $emailModel->sendPasswordRecoveryEmail($userAccount);
-                $session->set(self::SESSION_EMAIL_ADDRESS, $userAccount->emailAddress);
+                $session->set(self::SESSION_EMAIL_ADDRESS, $userAccount->getEmailAddress());
 
                 return $this->redirectToRoute('passwordRecovery.emailSent', [
-                    'emailAddress' => $userAccount->emailAddress,
+                    'emailAddress' => $userAccount->getEmailAddress(),
                 ]);
             }
         }
@@ -94,7 +94,7 @@ class PasswordRecoveryController extends Controller
         $emailAddress = $session->get(self::SESSION_EMAIL_ADDRESS);
         $session->remove(self::SESSION_EMAIL_ADDRESS);
         $userAccount = $repository->findByToken($token);
-        if (!$userAccount || $userAccount->emailAddress !== $emailAddress) {
+        if (!$userAccount || $userAccount->getEmailAddress() !== $emailAddress) {
             $this->addErrorMessage([], true);
 
             return $this->redirectToRoute('passwordRecovery.start');

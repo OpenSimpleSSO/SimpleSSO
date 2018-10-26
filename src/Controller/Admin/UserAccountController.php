@@ -86,7 +86,7 @@ class UserAccountController extends Controller
         if (!$userAccount) {
             throw new NotFoundHttpException();
         }
-        $initialEmailAddress = $userAccount->emailAddress;
+        $initialEmailAddress = $userAccount->getEmailAddress();
 
         $form = $this->createForm(ProfileEditionType::class, $model->generateAdminProfileEditionData($userAccount));
         $form->handleRequest($request);
@@ -94,7 +94,7 @@ class UserAccountController extends Controller
             try {
                 $model->editProfile($userAccount, $form->getData());
                 $this->saveDatabase();
-                if ($userAccount->emailAddress !== $initialEmailAddress) {
+                if ($userAccount->getEmailAddress() !== $initialEmailAddress) {
                     $emailModel->sendEmailAddressVerificationEmail($userAccount);
                 }
                 $this->addSuccessMessage();
@@ -104,7 +104,7 @@ class UserAccountController extends Controller
                 ]);
             } catch (UniqueConstraintViolationException $exception) {
                 // Revert email address to avoid security token change, and so user logout.
-                $userAccount->emailAddress = $initialEmailAddress;
+                $userAccount->setEmailAddress($initialEmailAddress);
                 $this->addFormError($form['emailAddress'], 'userAccount.emailAddress.alreadyUsed');
             }
         }
@@ -137,7 +137,7 @@ class UserAccountController extends Controller
         if (!$userAccount) {
             throw new NotFoundHttpException();
         }
-        if ($userAccount->emailAddressVerified) {
+        if ($userAccount->isEmailAddressVerified()) {
             // Do not send email if the address has already been verified.
             throw new BadRequestHttpException();
         }
@@ -145,7 +145,7 @@ class UserAccountController extends Controller
         $this->saveDatabase();
         $emailModel->sendEmailAddressVerificationEmail($userAccount);
         $this->addSuccessMessage([
-            'emailAddress' => $userAccount->emailAddress,
+            'emailAddress' => $userAccount->getEmailAddress(),
         ]);
 
         return $this->redirectToRoute('admin.userAccount.profile', [
