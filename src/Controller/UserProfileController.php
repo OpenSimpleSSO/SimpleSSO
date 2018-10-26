@@ -26,7 +26,7 @@ class UserProfileController extends Controller
 {
     /**
      * @Route("", methods={"GET"}, name="show")
-     * @Security("is_granted('ROLE_USER')")
+     * @Security("is_granted('authenticated-user')")
      *
      * @param UserAccountAttributeModel $attributeModel
      * @return Response
@@ -41,7 +41,7 @@ class UserProfileController extends Controller
 
     /**
      * @Route("/edit", methods={"GET", "POST"}, name="edit")
-     * @Security("is_granted('ROLE_USER')")
+     * @Security("is_granted('authenticated-user')")
      *
      * @param Request          $request
      * @param UserAccountModel $model
@@ -84,7 +84,7 @@ class UserProfileController extends Controller
 
     /**
      * @Route("/send-verification-email", methods={"GET"}, name="sendVerificationEmail")
-     * @Security("is_granted('ROLE_USER')")
+     * @Security("is_granted('authenticated-user')")
      *
      * @param UserAccountModel $model
      * @param EmailModel       $emailModel
@@ -142,7 +142,7 @@ class UserProfileController extends Controller
 
     /**
      * @Route("/change-password", methods={"GET", "POST"}, name="changePassword")
-     * @Security("is_granted('ROLE_USER')")
+     * @Security("is_granted('authenticated-user')")
      *
      * @param Request          $request
      * @param UserAccountModel $model

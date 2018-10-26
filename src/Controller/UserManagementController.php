@@ -50,7 +50,7 @@ class UserManagementController extends Controller
     ): Response {
 
         $symfonySecurityToken = $tokenStorage->getToken();
-        if (!$this->isGranted('CLIENT_ACCESS', $request)) {
+        if (!$this->isGranted('redirected-from-client', $request)) {
             if ($symfonySecurityToken->hasAttribute('client')) {
                 throw new AccessDeniedHttpException('Access token invalid.');
             }
@@ -65,7 +65,7 @@ class UserManagementController extends Controller
 
     /**
      * @Route("/generate-auth-token", methods={"GET"}, name="generateAuthToken")
-     * @Security("is_granted('ROLE_USER')")
+     * @Security("is_granted('authenticated-user')")
      *
      * @param SessionInterface $session
      * @param ClientRepository $clientRepository

@@ -38,4 +38,5 @@ security:
                 success_handler: App\Security\LogoutSuccessHandler
 
     access_control:
-        - { path: ^/admin, roles: ADMIN_ACCESS }
+        - { path: ^/admin, roles: admin-access }
+        - { path: ^/api, roles: client-access }

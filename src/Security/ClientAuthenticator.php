@@ -15,6 +15,9 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 use Vinorcola\ApiServerTools\Response;
 
+/**
+ * The authenticator for the API firewall.
+ */
 class ClientAuthenticator extends AbstractGuardAuthenticator
 {
     /**

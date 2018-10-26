@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Security;
+namespace App\Security\Voter;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-class AdminVoter extends Voter
+/**
+ * A voter for granting user to access administration pages.
+ */
+class AdminAccessVoter extends Voter
 {
-    public const ATTRIBUTE = 'ADMIN_ACCESS';
+    public const ATTRIBUTE = 'admin-access';
 
     /**
      * @var AuthorizationCheckerInterface
@@ -43,21 +45,5 @@ class AdminVoter extends Voter
         return
             $this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY') &&
             $this->hasRole($token, 'ROLE_SIMPLESSO_ADMIN');
-    }
-
-    /**
-     * @param TokenInterface $token
-     * @param string         $role
-     * @return bool
-     */
-    private function hasRole(TokenInterface $token, string $role)
-    {
-        foreach ($token->getRoles() as $tokenRole) {
-            if ($tokenRole->getRole() === $role) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

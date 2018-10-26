@@ -13,7 +13,6 @@ use App\Model\UserAccountAttributeModel;
 use App\Model\UserAccountModel;
 use App\Repository\UserAccountRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,7 +32,6 @@ class UserController extends Controller
      * @Route("/{userAccountId}", methods={"GET"}, name="profile", requirements={
      *     "userAccountId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      * })
-     * @Security("is_granted('ROLE_CLIENT')")
      *
      * @param string                    $userAccountId
      * @param UserAccountRepository     $repository
@@ -59,7 +57,6 @@ class UserController extends Controller
      *     "userAccountId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      *     "version":       "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      * })
-     * @Security("is_granted('ROLE_CLIENT')")
      *
      * @param string                $userAccountId
      * @param string                $version
@@ -80,7 +77,6 @@ class UserController extends Controller
 
     /**
      * @Route("/register", methods={"POST"}, name="register")
-     * @Security("is_granted('ROLE_CLIENT')")
      *
      * @param Request                   $request
      * @param JsonRequestModel          $jsonRequestModel
@@ -127,7 +123,6 @@ class UserController extends Controller
      * @Route("/{userAccountId}", methods={"PUT"}, name="editProfile", requirements={
      *     "userAccountId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      * })
-     * @Security("is_granted('ROLE_CLIENT')")
      *
      * @param Request                   $request
      * @param string                    $userAccountId
@@ -187,7 +182,6 @@ class UserController extends Controller
      * @Route("/{userAccountId}/password", methods={"PUT"}, name="changePassword", requirements={
      *     "userAccountId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      * })
-     * @Security("is_granted('ROLE_CLIENT')")
      *
      * @param Request               $request
      * @param string                $userAccountId
@@ -225,7 +219,6 @@ class UserController extends Controller
      * @Route("/{userAccountId}/enable", methods={"POST"}, name="enable", requirements={
      *     "userAccountId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      * })
-     * @Security("is_granted('ROLE_CLIENT')")
      *
      * @param string                         $userAccountId
      * @param UserAccountRepository          $repository
@@ -255,7 +248,6 @@ class UserController extends Controller
      * @Route("/{userAccountId}/disable", methods={"POST"}, name="disable", requirements={
      *     "userAccountId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
      * })
-     * @Security("is_granted('ROLE_CLIENT')")
      *
      * @param string                         $userAccountId
      * @param UserAccountRepository          $repository

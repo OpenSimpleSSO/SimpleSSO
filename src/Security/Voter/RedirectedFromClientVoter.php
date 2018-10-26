@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security;
+namespace App\Security\Voter;
 
 use App\Model\AccessTokenModel;
 use App\Repository\ClientRepository;
@@ -8,11 +8,13 @@ use SimpleSSO\CommonBundle\Exception\InvalidTokenException;
 use SimpleSSO\CommonBundle\Model\Data\SignedToken;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-class ClientVoter extends Voter
+/**
+ * A voter for granting user being redirected from a client.
+ */
+class RedirectedFromClientVoter extends Voter
 {
-    public const ATTRIBUTE = 'CLIENT_ACCESS';
+    public const ATTRIBUTE = 'redirected-from-client';
 
     /**
      * @var ClientRepository
