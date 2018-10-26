@@ -55,6 +55,30 @@ class UserController extends Controller
     }
 
     /**
+     * @Route("/{userAccountId}/check-version/{version}", methods={"GET"}, name="checkVersion", requirements={
+     *     "userAccountId": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+     *     "version":       "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+     * })
+     * @Security("is_granted('ROLE_CLIENT')")
+     *
+     * @param string                $userAccountId
+     * @param string                $version
+     * @param UserAccountRepository $repository
+     * @return Response
+     */
+    public function checkVersion(string $userAccountId, string $version, UserAccountRepository $repository): Response
+    {
+        $lastVersion = $repository->findVersion($userAccountId);
+        if (!$lastVersion) {
+            throw new NotFoundHttpException();
+        }
+
+        return new Response([
+            'isLastVersion' => $version === $lastVersion,
+        ]);
+    }
+
+    /**
      * @Route("/register", methods={"POST"}, name="register")
      * @Security("is_granted('ROLE_CLIENT')")
      *

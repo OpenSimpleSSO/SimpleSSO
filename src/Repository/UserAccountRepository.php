@@ -76,4 +76,17 @@ class UserAccountRepository extends Repository
             ->setParameter('emailAddress', $emailAddress)
             ->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * @param string $userAccountId
+     * @return string|null
+     */
+    public function findVersion(string $userAccountId): ?string
+    {
+        return $this
+            ->createQueryBuilder('ua')->select('ua.version')
+            ->where('ua.id = :userAccountId')
+            ->setParameter('userAccountId', $userAccountId)
+            ->getQuery()->getSingleScalarResult();
+    }
 }
