@@ -83,10 +83,15 @@ class UserAccountRepository extends Repository
      */
     public function findVersion(string $userAccountId): ?string
     {
-        return $this
+        $result = $this
             ->createQueryBuilder('ua')->select('ua.version')
             ->where('ua.id = :userAccountId')
             ->setParameter('userAccountId', $userAccountId)
-            ->getQuery()->getSingleScalarResult();
+            ->getQuery()->getOneOrNullResult();
+        if (!$result) {
+            return null;
+        }
+
+        return $result['version'];
     }
 }
